@@ -130,6 +130,19 @@ const PATHS = {
       <path d="M9 7v7M15 7v4" />
     </>
   ),
+  chevronLeft: <path d="m15 6-6 6 6 6" />,
+  chevronRight: <path d="m9 6 6 6-6 6" />,
+  grip: (
+    <>
+      <circle cx="9" cy="6" r="1" />
+      <circle cx="15" cy="6" r="1" />
+      <circle cx="9" cy="12" r="1" />
+      <circle cx="15" cy="12" r="1" />
+      <circle cx="9" cy="18" r="1" />
+      <circle cx="15" cy="18" r="1" />
+    </>
+  ),
+  close: <path d="M6 6l12 12M18 6 6 18" />,
 } as const;
 
 export type IconName = keyof typeof PATHS;

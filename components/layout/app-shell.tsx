@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { signOut } from "@/app/login/actions";
 
-type Current = "board" | "generate" | "script";
+type Current = "board" | "generate" | "script" | "calendar";
 
 // href kosong = fitur belum ada (tampil redup, tidak bisa diklik).
 const NAV: { key: string; href?: string; label: string }[] = [
   { key: "board", href: "/dashboard", label: "Papan Visual" },
   { key: "generate", href: "/generate", label: "Idea Generator" },
   { key: "script", href: "/script", label: "Script & Shot List" },
-  { key: "calendar", label: "Kalender" },
+  { key: "calendar", href: "/calendar", label: "Kalender" },
 ];
 
 const SHADOW = "shadow-card";

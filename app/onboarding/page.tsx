@@ -21,11 +21,9 @@ async function OnboardingContent() {
 
 export default function OnboardingPage() {
   return (
-    <main className="flex min-h-dvh items-center justify-center p-4">
+    <main className="flex min-h-dvh items-center justify-center px-4 py-4 sm:px-6">
       <Suspense
-        fallback={
-          <div className="h-96 w-full max-w-xl animate-pulse rounded-card border border-brand-border bg-white" />
-        }
+        fallback={<div className="h-96 w-full max-w-5xl animate-pulse rounded-card bg-white" />}
       >
         <OnboardingContent />
       </Suspense>

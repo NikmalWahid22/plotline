@@ -7,23 +7,26 @@ import type { Platform } from "@/lib/ideas";
 import { DEFAULT_TONE, type Tone } from "@/lib/tones";
 import { GenerateCta } from "./generate-cta";
 import { ParameterPanel } from "./parameter-panel";
+import { QuotaExhausted } from "./quota-exhausted";
 import { Results, ResultsSkeleton } from "./results";
 
 export function Generator({
   nicheName,
   defaultPlatform,
   initialRemaining,
+  initialTopic = "",
 }: {
   nicheName: string;
   defaultPlatform: Platform;
   initialRemaining: number | null;
+  initialTopic?: string;
 }) {
   const [state, action, pending] = useActionState<GenerateState, FormData>(
     generateIdeasAction,
     null
   );
   // Dikontrol lewat state supaya isi form tidak ter-reset setelah generate.
-  const [topic, setTopic] = useState("");
+  const [topic, setTopic] = useState(initialTopic);
   const [platform, setPlatform] = useState<Platform>(defaultPlatform);
   const [tone, setTone] = useState<Tone>(DEFAULT_TONE);
 
@@ -59,9 +62,11 @@ export function Generator({
       <div className="min-w-0 lg:col-span-7">
         {pending ? (
           <ResultsSkeleton />
+        ) : outOfQuota && !state?.ideas ? (
+          <QuotaExhausted />
         ) : state?.error ? (
           <Card role="alert" className="p-6">
-            <p className="font-bold">{outOfQuota ? "Jatah habis" : "Belum berhasil"}</p>
+            <p className="font-bold">Belum berhasil</p>
             <p className="mt-1 text-sm text-brand-muted">{state.error}</p>
           </Card>
         ) : state?.ideas && state.platform ? (

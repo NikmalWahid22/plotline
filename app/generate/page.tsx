@@ -24,8 +24,13 @@ function GenerateSkeleton() {
 }
 
 // Bagian yang butuh data per-request (sesi, profil, sisa kuota)
-async function GenerateContent() {
+async function GenerateContent({
+  searchParams,
+}: {
+  searchParams: Promise<{ topik?: string }>;
+}) {
   await connection();
+  const { topik } = await searchParams;
   const { supabase, email, profile } = await requireOnboardedUser();
   const remaining = await getRemainingQuota(supabase);
 
@@ -40,15 +45,20 @@ async function GenerateContent() {
         nicheName={nicheLabel(profile.niche)}
         defaultPlatform={defaultPlatform}
         initialRemaining={remaining}
+        initialTopic={(topik ?? "").trim().slice(0, 200)}
       />
     </AppShell>
   );
 }
 
-export default function GeneratePage() {
+export default function GeneratePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ topik?: string }>;
+}) {
   return (
     <Suspense fallback={<GenerateSkeleton />}>
-      <GenerateContent />
+      <GenerateContent searchParams={searchParams} />
     </Suspense>
   );
 }

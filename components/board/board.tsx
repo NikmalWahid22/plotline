@@ -8,6 +8,7 @@ import { BoardFilters, matchesFilter, type PlatformFilter } from "./board-filter
 import { BoardHero } from "./board-hero";
 import { BoardStats } from "./board-stats";
 import { EmptyState } from "./empty-state";
+import { EmptySteps } from "./empty-steps";
 import { IdeaForm } from "./idea-form";
 
 export function Board({
@@ -67,7 +68,7 @@ export function Board({
         </div>
       )}
 
-      <BoardCta />
+      {ideas.length === 0 ? <EmptySteps /> : <BoardCta />}
     </div>
   );
 }

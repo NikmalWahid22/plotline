@@ -1,13 +1,28 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { AuthCard } from "@/components/auth/auth-card";
 
 export const metadata: Metadata = { title: "Masuk | Plotline" };
 
-export default function LoginPage() {
+// Membaca ?mode=daftar dari tombol "Daftar" di landing page.
+async function AuthSection({
+  searchParams,
+}: {
+  searchParams: Promise<{ mode?: string }>;
+}) {
+  const { mode } = await searchParams;
+  return <AuthCard initialMode={mode === "daftar" ? "daftar" : "masuk"} />;
+}
+
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ mode?: string }>;
+}) {
   return (
-    <main className="mx-auto grid min-h-dvh w-full max-w-7xl lg:grid-cols-2 lg:gap-12 lg:px-8 xl:px-10">
+    <main className="grid min-h-dvh lg:grid-cols-2">
       {/* Panel kiri: hanya tampil di layar lebar */}
-      <section className="hidden flex-col justify-between gap-6 py-6 lg:flex xl:py-8">
+      <section className="hidden flex-col justify-between gap-6 p-6 lg:flex xl:p-8">
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-ink font-extrabold text-brand-lime">
             P
@@ -97,8 +112,10 @@ export default function LoginPage() {
       </section>
 
       {/* Panel kanan: kartu login */}
-      <section className="flex items-center justify-center p-4 lg:justify-end lg:px-0 lg:py-6">
-        <AuthCard />
+      <section className="flex items-center justify-center p-4 lg:p-6">
+        <Suspense fallback={<AuthCard />}>
+          <AuthSection searchParams={searchParams} />
+        </Suspense>
       </section>
     </main>
   );

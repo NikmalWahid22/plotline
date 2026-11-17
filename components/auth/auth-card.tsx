@@ -8,8 +8,8 @@ import { SignupForm } from "./signup-form";
 
 type Mode = "masuk" | "daftar";
 
-export function AuthCard() {
-  const [mode, setMode] = useState<Mode>("masuk");
+export function AuthCard({ initialMode = "masuk" }: { initialMode?: Mode }) {
+  const [mode, setMode] = useState<Mode>(initialMode);
 
   return (
     <Card className="w-full max-w-md p-6">
@@ -30,7 +30,7 @@ export function AuthCard() {
         ))}
       </div>
 
-      <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+      <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
         {mode === "masuk" ? "Selamat datang kembali" : "Mulai dengan Plotline"}
       </h1>
       <p className="mt-1.5 text-sm text-brand-muted">

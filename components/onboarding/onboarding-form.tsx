@@ -7,34 +7,16 @@ import {
   type OnboardingState,
 } from "@/app/onboarding/actions";
 import { Alert } from "@/components/primitives/alert";
-import { Icon, type IconName } from "@/components/primitives/icon";
+import { Icon } from "@/components/primitives/icon";
 import { PLATFORMS } from "@/lib/ideas";
 import { FREQUENCIES, NICHES, type Option } from "@/lib/profile";
 import { Choice } from "./choice";
+import { FREQUENCY_ICON, NICHE_ICON, PLATFORM_ICON } from "./icons";
 
 const PLATFORM_OPTIONS: Option[] = PLATFORMS.map((p) => ({
   value: p.value,
   label: p.fullLabel,
 }));
-
-const NICHE_ICON: Record<string, IconName> = {
-  coding: "screen",
-  ui_design: "tune",
-  motion: "film",
-  gadgets: "phone",
-  other: "sparkles",
-};
-const PLATFORM_ICON: Record<string, IconName> = {
-  tiktok: "phone",
-  reels: "phone",
-  youtube_shorts: "play",
-  youtube_long: "screen",
-};
-const FREQUENCY_ICON: Record<string, IconName> = {
-  "1-2": "calendar",
-  "3-4": "calendar",
-  "5+": "bolt",
-};
 
 const STEPS = [
   {
@@ -109,7 +91,7 @@ export function OnboardingForm() {
       <header className="rounded-card bg-white px-5 py-4 shadow-card">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-lime font-extrabold">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-lime font-bold">
               {step}
             </span>
             <div>
@@ -161,7 +143,7 @@ export function OnboardingForm() {
 
       {/* Judul */}
       <div className="px-1">
-        <h1 className="text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
+        <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
           {current.title}
         </h1>
         <p className="mt-0.5 text-sm text-brand-muted">{current.text}</p>
@@ -169,7 +151,7 @@ export function OnboardingForm() {
 
       {/* Pilihan */}
       {step === 1 && (
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-6">
           {NICHES.map((o, i) => (
             <Choice
               key={o.value}
@@ -177,14 +159,20 @@ export function OnboardingForm() {
               icon={NICHE_ICON[o.value]}
               selected={niche === o.value}
               onSelect={() => setNiche(o.value)}
-              className={i < 3 ? "lg:col-span-2" : "lg:col-span-3"}
+              className={
+                i < 3
+                  ? "lg:col-span-2"
+                  : i === NICHES.length - 1
+                    ? "col-span-2 lg:col-span-3"
+                    : "lg:col-span-3"
+              }
             />
           ))}
         </div>
       )}
 
       {step === 2 && (
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {PLATFORM_OPTIONS.map((o) => (
             <Choice
               key={o.value}

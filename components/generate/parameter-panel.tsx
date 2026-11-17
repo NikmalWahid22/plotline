@@ -100,7 +100,7 @@ export function ParameterPanel(p: Props) {
         </div>
 
         {/* Platform (satu pilihan) */}
-        <fieldset>
+        <fieldset className="min-w-0">
           <div className="mb-2 flex items-center justify-between">
             <legend className="text-sm font-bold">Target Platform</legend>
             <span className="text-xs font-semibold text-brand-purple">Pilih satu</span>
@@ -144,7 +144,7 @@ export function ParameterPanel(p: Props) {
         </fieldset>
 
         {/* Gaya bahasa */}
-        <fieldset>
+        <fieldset className="min-w-0">
           <legend className="mb-2 text-sm font-bold">Tone of Voice</legend>
           <div className="flex flex-col gap-2">
             {TONES.map((o) => {

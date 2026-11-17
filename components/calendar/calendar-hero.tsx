@@ -11,7 +11,7 @@ export function CalendarHero({
         <span className="inline-flex items-center rounded-full bg-brand-lime px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
           Distribusi Konten
         </span>
-        <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+        <h1 className="mt-5 text-4xl font-bold sm:text-hero">
           Distribusi konten mingguan dengan ritme{" "}
           <span className="text-brand-purple">presisi.</span>
         </h1>
@@ -21,7 +21,7 @@ export function CalendarHero({
         </p>
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex w-full gap-3 lg:w-auto">
         <Metric value={scheduledThisWeek} label="Terjadwal minggu ini" />
         <Metric value={backlog} label="Ide di backlog" />
       </div>
@@ -31,8 +31,8 @@ export function CalendarHero({
 
 function Metric({ value, label }: { value: number; label: string }) {
   return (
-    <div className="min-w-[9.5rem] rounded-card bg-white px-6 py-4 shadow-card">
-      <p className="text-3xl font-extrabold leading-none">{value}</p>
+    <div className="min-w-0 flex-1 rounded-card lg:min-w-[9.5rem] lg:flex-none bg-white px-6 py-4 shadow-card">
+      <p className="text-stat">{value}</p>
       <p className="mt-2 text-xs font-semibold text-brand-muted">{label}</p>
     </div>
   );

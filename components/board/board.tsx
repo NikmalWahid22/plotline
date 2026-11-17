@@ -31,7 +31,7 @@ export function Board({
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid items-stretch gap-4 lg:grid-cols-12">
+      <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-12">
         <BoardHero defaultPlatform={defaultPlatform} nicheName={nicheName} />
         <BoardStats
           published={count("published")}
@@ -56,7 +56,7 @@ export function Board({
       {ideas.length === 0 && !showForm ? (
         <EmptyState onStart={() => setShowForm(true)} />
       ) : (
-        <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
           {STATUSES.map((s) => (
             <BoardColumn
               key={s.value}

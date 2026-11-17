@@ -41,7 +41,7 @@ export function Generator({
 
   return (
     <div className="flex flex-col gap-8">
-    <div className="grid items-start gap-4 lg:grid-cols-12">
+    <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-12">
       <div className="lg:col-span-5">
         <ParameterPanel
           action={action}
@@ -75,7 +75,7 @@ export function Generator({
           <div className="rounded-card bg-white/60 px-6 py-14 text-center shadow-card">
             <p className="font-bold">Belum ada hasil</p>
             <p className="mx-auto mt-1 max-w-sm text-sm text-brand-muted">
-              Isi parameter di samping, lalu klik Generate. Ide yang cocok bisa
+              Isi parameter, lalu klik Generate. Ide yang cocok bisa
               disimpan ke papan.
             </p>
           </div>

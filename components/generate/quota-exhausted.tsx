@@ -4,17 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Icon, type IconName } from "@/components/primitives/icon";
 import { DAILY_LIMIT } from "@/lib/constants";
-
-// Jatah reset tengah malam WIB (UTC+7, tanpa DST).
-function timeUntilReset(): string {
-  const DAY = 86_400_000;
-  const WIB = 7 * 3_600_000;
-  const left = DAY - ((Date.now() + WIB) % DAY);
-  const hours = Math.floor(left / 3_600_000);
-  const minutes = Math.max(1, Math.ceil((left % 3_600_000) / 60_000));
-  if (minutes === 60) return `${hours + 1} jam`;
-  return hours > 0 ? `${hours} jam ${minutes} menit` : `${minutes} menit`;
-}
+import { timeUntilReset } from "@/lib/reset-time";
 
 const NEXT_STEPS: { href: string; icon: IconName; title: string; text: string }[] = [
   { href: "/dashboard#tulis-ide", icon: "notes", title: "Tulis ide manual", text: "Catat ide kilat tanpa AI" },
@@ -60,7 +50,7 @@ export function QuotaExhausted() {
             <Icon name="tune" className="h-4 w-4" />
             Konsumsi Kuota Hari Ini
           </span>
-          <span className="font-extrabold">
+          <span className="font-bold">
             {DAILY_LIMIT} / {DAILY_LIMIT} Terpakai (100%)
           </span>
         </div>

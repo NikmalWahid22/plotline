@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { signOut } from "@/app/login/actions";
+import { Icon, type IconName } from "@/components/primitives/icon";
 
-type Current = "board" | "generate" | "script" | "calendar";
+type Current = "board" | "generate" | "script" | "calendar" | "settings";
 
 // href kosong = fitur belum ada (tampil redup, tidak bisa diklik).
 const NAV: { key: string; href?: string; label: string }[] = [
@@ -9,6 +10,14 @@ const NAV: { key: string; href?: string; label: string }[] = [
   { key: "generate", href: "/generate", label: "Idea Generator" },
   { key: "script", href: "/script", label: "Script & Shot List" },
   { key: "calendar", href: "/calendar", label: "Kalender" },
+];
+
+// Tab bawah di HP: label pendek dan ikon supaya muat dan mudah dijangkau ibu jari.
+const MOBILE_TABS: { key: Current; href: string; label: string; icon: IconName }[] = [
+  { key: "board", href: "/dashboard", label: "Papan", icon: "kanban" },
+  { key: "generate", href: "/generate", label: "Generate", icon: "sparkles" },
+  { key: "script", href: "/script", label: "Script", icon: "film" },
+  { key: "calendar", href: "/calendar", label: "Kalender", icon: "calendar" },
 ];
 
 const SHADOW = "shadow-card";
@@ -53,19 +62,19 @@ export function AppShell({
   return (
     <div className="min-h-dvh">
       <header className="sticky top-0 z-50 bg-brand-bg/90 shadow-[0_1px_8px_rgba(20,20,26,0.04)] backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:px-6 xl:h-20 xl:flex-nowrap xl:py-0 lg:px-10">
+        <div className="mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6 lg:h-20 lg:px-10">
           {/* Kiri: logo + navigasi */}
           <div className="flex items-center gap-6">
             <Link href="/dashboard" className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-ink text-sm font-extrabold text-brand-lime">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-ink text-sm font-bold text-brand-lime">
                 P
               </span>
-              <span className="text-lg font-extrabold tracking-tight">Plotline</span>
+              <span className="text-lg font-bold tracking-tight">Plotline</span>
             </Link>
 
             <nav
               aria-label="Navigasi utama"
-              className="order-last flex w-full gap-0.5 overflow-x-auto rounded-full bg-[#f0ecf5] p-1 xl:order-none xl:w-auto"
+              className="hidden gap-0.5 rounded-full bg-[#f0ecf5] p-1 lg:flex"
             >
               {NAV.map((item) => {
                 const active = current === item.key;
@@ -119,7 +128,7 @@ export function AppShell({
           <div className="flex items-center gap-2 md:gap-3">
             <div
               title="Segera hadir"
-              className={`hidden h-10 items-center gap-2 rounded-full bg-white px-4 md:flex ${SHADOW}`}
+              className={`hidden h-10 items-center gap-2 rounded-full bg-white px-4 xl:flex ${SHADOW}`}
             >
               <SearchIcon />
               <input
@@ -160,6 +169,14 @@ export function AppShell({
                 {email && (
                   <p className="truncate px-2 pb-2 text-sm text-brand-muted">{email}</p>
                 )}
+                <Link
+                  href="/settings"
+                  className={`mb-2 flex h-10 w-full items-center justify-center rounded-full text-sm font-bold transition-colors ${
+                    current === "settings" ? "bg-brand-lime" : "bg-brand-bg hover:bg-brand-border"
+                  }`}
+                >
+                  Pengaturan
+                </Link>
                 <form action={signOut}>
                   <button
                     type="submit"
@@ -178,7 +195,7 @@ export function AppShell({
         {children}
       </div>
 
-      <footer className="w-full bg-brand-bg py-6 shadow-[0_-1px_8px_rgba(20,20,26,0.03)]">
+      <footer className="w-full bg-brand-bg pb-28 pt-6 shadow-[0_-1px_8px_rgba(20,20,26,0.03)] lg:pb-6">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center justify-between gap-4 px-4 sm:px-6 md:flex-row lg:px-10">
           <p className="flex flex-wrap items-baseline justify-center gap-x-2 text-center md:justify-start">
             <span className="text-lg font-bold tracking-tight">Plotline</span>
@@ -203,6 +220,36 @@ export function AppShell({
           </ul>
         </div>
       </footer>
+
+      {/* Navigasi bawah, hanya di HP dan tablet kecil */}
+      <nav
+        aria-label="Navigasi utama"
+        className="fixed inset-x-0 bottom-0 z-50 bg-white/90 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_rgba(20,20,26,0.06)] backdrop-blur-xl lg:hidden"
+      >
+        <ul className="mx-auto flex max-w-md items-stretch justify-around px-2 py-2">
+          {MOBILE_TABS.map((t) => {
+            const active = current === t.key;
+            return (
+              <li key={t.key} className="flex-1">
+                <Link
+                  href={t.href}
+                  aria-current={active ? "page" : undefined}
+                  className="flex flex-col items-center gap-1 py-1 text-[11px] font-bold"
+                >
+                  <span
+                    className={`flex h-8 w-14 items-center justify-center rounded-full transition-colors ${
+                      active ? "bg-brand-lime text-brand-ink" : "text-brand-muted"
+                    }`}
+                  >
+                    <Icon name={t.icon} className="h-5 w-5" />
+                  </span>
+                  <span className={active ? "text-brand-ink" : "text-brand-muted"}>{t.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
     </div>
   );
 }

@@ -73,7 +73,7 @@ export function HowItWorks() {
               </span>
               {s.result}
             </p>
-          </div>
+          </div> 
         ))}
       </div>
 

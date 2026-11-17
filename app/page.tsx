@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { ClosingCta } from "@/components/landing/closing-cta";
 import { Features } from "@/components/landing/features";
 import { Hero } from "@/components/landing/hero";
 import { HowItWorks } from "@/components/landing/how-it-works";
+import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingNav } from "@/components/landing/landing-nav";
 
 export const metadata: Metadata = {
@@ -26,8 +28,9 @@ export default function Home() {
         <Hero />
         <Features />
         <HowItWorks />
-        {/* Menyusul: penutup dan footer */}
+        <ClosingCta />
       </main>
+      <LandingFooter />
     </div>
   );
 }

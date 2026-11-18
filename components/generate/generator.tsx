@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { generateIdeasAction, type GenerateState } from "@/app/generate/actions";
 import { Card } from "@/components/primitives/card";
 import type { Platform } from "@/lib/ideas";
@@ -30,6 +30,14 @@ export function Generator({
   const [platform, setPlatform] = useState<Platform>(defaultPlatform);
   const [tone, setTone] = useState<Tone>(DEFAULT_TONE);
 
+  // Di HP panel hasil ada di bawah form: gulir ke sana saat generate dimulai.
+  const resultsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (pending && window.matchMedia("(max-width: 1023px)").matches) {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [pending]);
+
   const remaining = state?.remaining ?? initialRemaining;
   const outOfQuota = remaining === 0;
 
@@ -40,7 +48,7 @@ export function Generator({
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4 lg:gap-8">
     <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-12">
       <div className="lg:col-span-5">
         <ParameterPanel
@@ -59,7 +67,7 @@ export function Generator({
         />
       </div>
 
-      <div className="min-w-0 lg:col-span-7">
+      <div ref={resultsRef} className="min-w-0 scroll-mt-20 lg:col-span-7">
         {pending ? (
           <ResultsSkeleton />
         ) : outOfQuota && !state?.ideas ? (
@@ -72,7 +80,7 @@ export function Generator({
         ) : state?.ideas && state.platform ? (
           <Results key={state.batch} ideas={state.ideas} platform={state.platform} />
         ) : (
-          <div className="rounded-card bg-white/60 px-6 py-14 text-center shadow-card">
+          <div className="rounded-card bg-white/60 px-6 py-14 text-center shadow-card max-lg:hidden">
             <p className="font-bold">Belum ada hasil</p>
             <p className="mx-auto mt-1 max-w-sm text-sm text-brand-muted">
               Isi parameter, lalu klik Generate. Ide yang cocok bisa

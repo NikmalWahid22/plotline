@@ -17,7 +17,7 @@ export function ShotCard({
 }) {
   return (
     <Card
-      className={`flex flex-col gap-3 p-6 transition-all hover:-translate-y-0.5 ${
+      className={`flex flex-col gap-2 p-4 transition-all hover:-translate-y-0.5 sm:gap-3 sm:p-6 ${
         done ? "opacity-70" : ""
       }`}
     >
@@ -25,7 +25,7 @@ export function ShotCard({
         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-purple text-xs font-semibold text-white">
           {number}
         </span>
-        <h3 className="text-lg font-bold tracking-tight">
+        <h3 className="text-base font-bold tracking-tight sm:text-lg">
           Shot {number}
           {shot.type ? ` • ${shot.type}` : ""}
         </h3>

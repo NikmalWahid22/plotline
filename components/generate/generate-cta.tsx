@@ -5,7 +5,7 @@ import { Icon } from "@/components/primitives/icon";
 // Strip di bawah halaman Generate: ajakan ke Papan Visual.
 export function GenerateCta() {
   return (
-    <Card className="flex flex-col items-stretch justify-between gap-5 p-5 sm:flex-row sm:items-center">
+    <Card className="flex flex-col items-stretch justify-between gap-5 p-5 max-sm:hidden sm:flex-row sm:items-center">
       <div className="flex items-center gap-4">
         <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-lime">
           <Icon name="board" className="h-6 w-6" />

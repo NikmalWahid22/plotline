@@ -22,7 +22,7 @@ function SectionBar({
   lime?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between px-1">
+    <div className="flex items-center justify-between px-1 max-lg:hidden">
       <div className="flex items-center gap-2">
         <Icon name={icon} className="h-[22px] w-[22px]" />
         <h2 className="text-lg font-bold tracking-tight">{title}</h2>
@@ -41,8 +41,12 @@ function SectionBar({
   );
 }
 
+type Tab = "naskah" | "shot" | "thumbnail";
+
 // Dua kolom: naskah per scene (kiri) dan shot list (kanan), plus ide thumbnail.
+// Di HP ketiga bagian itu jadi tab supaya tidak perlu menggulir sangat panjang.
 export function ScriptView({ script, ideaId }: { script: Script; ideaId: string }) {
+  const [tab, setTab] = useState<Tab>("naskah");
   const [done, setDone] = useState<boolean[]>(() => script.shots.map((s) => s.done));
   const [error, setError] = useState<string | null>(null);
   const [, startTransition] = useTransition();
@@ -65,12 +69,52 @@ export function ScriptView({ script, ideaId }: { script: Script; ideaId: string 
     script.shots.flatMap((s, i) => (s.scene === sceneNo ? [i + 1] : []));
 
   const doneCount = done.filter(Boolean).length;
+  const hasThumbs = script.thumbnail_ideas.length > 0;
+
+  const tabs: { key: Tab; label: string; count: number }[] = [
+    { key: "naskah", label: "Naskah", count: script.scenes.length },
+    { key: "shot", label: "Shot List", count: script.shots.length },
+    ...(hasThumbs
+      ? [{ key: "thumbnail" as const, label: "Thumbnail", count: script.thumbnail_ideas.length }]
+      : []),
+  ];
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="grid items-start gap-6 lg:grid-cols-12">
+    <div className="flex flex-col gap-4 lg:gap-6">
+      {/* Tab: hanya di HP */}
+      <div
+        role="tablist"
+        aria-label="Bagian script"
+        className="flex gap-1 rounded-full bg-white p-1 shadow-card lg:hidden"
+      >
+        {tabs.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            role="tab"
+            aria-selected={tab === t.key}
+            onClick={() => setTab(t.key)}
+            className={`flex-1 rounded-full px-2 py-2 text-xs font-bold transition-colors ${
+              tab === t.key ? "bg-brand-ink text-white" : "text-brand-muted"
+            }`}
+          >
+            {t.label}
+            <span className={`ml-1 ${tab === t.key ? "text-brand-lime" : ""}`}>{t.count}</span>
+          </button>
+        ))}
+      </div>
+
+      <div
+        className={`grid items-start gap-6 lg:grid-cols-12 ${
+          tab === "thumbnail" ? "max-lg:hidden" : ""
+        }`}
+      >
         {/* Kiri: naskah per scene */}
-        <div className="flex flex-col gap-4 lg:col-span-7">
+        <div
+          className={`flex flex-col gap-4 lg:col-span-7 ${
+            tab !== "naskah" ? "max-lg:hidden" : ""
+          }`}
+        >
           <SectionBar
             icon="notes"
             title="Naskah Suara (Voiceover & Dialogue)"
@@ -87,7 +131,11 @@ export function ScriptView({ script, ideaId }: { script: Script; ideaId: string 
         </div>
 
         {/* Kanan: shot list */}
-        <div className="flex flex-col gap-4 lg:col-span-5">
+        <div
+          className={`flex flex-col gap-4 lg:col-span-5 ${
+            tab !== "shot" ? "max-lg:hidden" : ""
+          }`}
+        >
           <SectionBar
             icon="film"
             title="Shot List & Visual Notes"
@@ -118,12 +166,12 @@ export function ScriptView({ script, ideaId }: { script: Script; ideaId: string 
         </div>
       </div>
 
-      {script.thumbnail_ideas.length > 0 && (
-        <section>
-          <h2 className="mb-3 px-1 text-lg font-bold tracking-tight">Ide thumbnail</h2>
+      {hasThumbs && (
+        <section className={tab !== "thumbnail" ? "max-lg:hidden" : ""}>
+          <h2 className="mb-3 px-1 text-lg font-bold tracking-tight max-lg:hidden">Ide thumbnail</h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {script.thumbnail_ideas.map((t, i) => (
-              <Card key={i} className="p-5 text-sm font-medium">
+              <Card key={i} className="p-4 text-sm font-medium sm:p-5">
                 {t}
               </Card>
             ))}

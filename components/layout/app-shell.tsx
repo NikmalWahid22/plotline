@@ -191,12 +191,12 @@ export function AppShell({
         </div>
       </header>
 
-      <div className="mx-auto w-full max-w-[1440px] px-4 pb-8 pt-6 sm:px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-[1440px] px-4 pb-8 pt-4 sm:px-6 sm:pt-6 lg:px-10">
         {children}
       </div>
 
-      <footer className="w-full bg-brand-bg pb-28 pt-6 shadow-[0_-1px_8px_rgba(20,20,26,0.03)] lg:pb-6">
-        <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center justify-between gap-4 px-4 sm:px-6 md:flex-row lg:px-10">
+      <footer className="w-full bg-brand-bg pb-24 lg:pb-6 lg:pt-6 lg:shadow-[0_-1px_8px_rgba(20,20,26,0.03)]">
+        <div className="mx-auto hidden w-full max-w-[1440px] flex-col items-center justify-between gap-4 px-4 sm:px-6 md:flex-row lg:flex lg:px-10">
           <p className="flex flex-wrap items-baseline justify-center gap-x-2 text-center md:justify-start">
             <span className="text-lg font-bold tracking-tight">Plotline</span>
             <span className="text-sm font-medium text-brand-muted">
@@ -205,7 +205,7 @@ export function AppShell({
           </p>
 
           {/* Halaman ini belum ada: tampil redup, tidak bisa diklik */}
-          <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1">
+          <ul className="hidden flex-wrap items-center justify-center gap-x-6 gap-y-1 sm:flex">
             {FOOTER_LINKS.map((label) => (
               <li key={label}>
                 <span

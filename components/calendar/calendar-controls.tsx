@@ -26,13 +26,13 @@ export function CalendarControls({
   ];
 
   return (
-    <div className="flex flex-col gap-4 rounded-card bg-white p-4 shadow-card xl:flex-row xl:items-center xl:justify-between">
+    <div className="flex flex-col gap-3 rounded-card bg-white p-3 shadow-card sm:p-4 sm:gap-4 xl:flex-row xl:items-center xl:justify-between">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2">
+        <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start">
           <Link href={`/calendar?week=${addDays(weekStart, -7)}`} aria-label="Minggu sebelumnya" className={NAV_BTN}>
             <Icon name="chevronLeft" className="h-5 w-5" />
           </Link>
-          <p className="min-w-[11.5rem] text-center text-base font-extrabold">
+          <p className="text-center text-base font-bold sm:min-w-[11.5rem]">
             {formatRange(weekStart)}
           </p>
           <Link href={`/calendar?week=${addDays(weekStart, 7)}`} aria-label="Minggu berikutnya" className={NAV_BTN}>
@@ -43,16 +43,16 @@ export function CalendarControls({
         <Link
           href="/calendar"
           aria-disabled={isCurrentWeek}
-          className={`flex h-10 items-center rounded-full px-5 text-sm font-bold transition ${
+          className={`h-10 items-center rounded-full px-5 text-sm font-bold transition ${
             isCurrentWeek
-              ? "bg-brand-lime"
-              : "bg-brand-bg hover:bg-brand-border"
+              ? "hidden bg-brand-lime sm:flex"
+              : "flex bg-brand-bg hover:bg-brand-border"
           }`}
         >
           Minggu Ini
         </Link>
 
-        <div className="flex rounded-full bg-[#f0ecf5] p-1 text-sm font-bold">
+        <div className="hidden rounded-full bg-[#f0ecf5] p-1 text-sm font-bold sm:flex">
           <span className="rounded-full bg-white px-4 py-1.5 shadow-card">Mingguan</span>
           <span
             aria-disabled="true"
@@ -64,7 +64,11 @@ export function CalendarControls({
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Filter platform">
+      <div
+        className="-mx-3 flex gap-2 overflow-x-auto px-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+        role="group"
+        aria-label="Filter platform"
+      >
         {options.map((o) => {
           const active = filter === o.value;
           return (
@@ -73,7 +77,7 @@ export function CalendarControls({
               type="button"
               onClick={() => onFilter(o.value)}
               aria-pressed={active}
-              className={`flex h-10 items-center gap-2 rounded-full px-4 text-sm font-bold transition ${
+              className={`flex h-9 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-bold transition sm:h-10 ${
                 active ? "bg-brand-ink text-white" : "bg-brand-bg hover:bg-brand-border"
               }`}
             >

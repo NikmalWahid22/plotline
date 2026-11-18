@@ -13,22 +13,22 @@ export function SceneCard({
   shotNumbers: number[];
 }) {
   return (
-    <Card className="flex flex-col gap-4 p-6 transition-all hover:-translate-y-0.5">
+    <Card className="flex flex-col gap-3 p-4 transition-all hover:-translate-y-0.5 sm:gap-4 sm:p-6">
       <div className="flex items-center gap-2">
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-ink text-sm font-bold text-white">
           {index + 1}
         </span>
-        <h3 className="text-lg font-bold uppercase leading-tight tracking-tight">
+        <h3 className="text-base font-bold uppercase leading-tight tracking-tight sm:text-lg">
           Scene {index + 1}: {scene.title}
         </h3>
       </div>
 
-      <div className="rounded-2xl bg-brand-bg p-4">
+      <div className="rounded-2xl bg-brand-bg p-3 sm:p-4">
         <p className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-brand-muted">
           <Icon name="mic" className="h-4 w-4" />
           Dialog / Audio
         </p>
-        <p className="text-lg font-semibold leading-relaxed">
+        <p className="text-base font-semibold leading-relaxed sm:text-lg">
           &ldquo;{scene.voiceover}&rdquo;
         </p>
       </div>
@@ -43,7 +43,7 @@ export function SceneCard({
             </p>
           </div>
         </div>
-        <div className="flex items-start gap-2 rounded-xl bg-brand-bg p-3">
+        <div className="hidden items-start gap-2 rounded-xl bg-brand-bg p-3 md:flex">
           <Icon name="link" className="mt-0.5 h-5 w-5 shrink-0 text-[#3f627a]" />
           <div>
             <p className="text-xs font-bold">Link Shot</p>

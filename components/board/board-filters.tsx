@@ -35,8 +35,12 @@ export function BoardFilters({
   onAddFull: () => void;
 }) {
   return (
-    <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-      <div className="flex flex-wrap items-center gap-1" role="group" aria-label="Filter platform">
+    <div className="flex items-center justify-between gap-3">
+      <div
+        className="-mx-1 -my-2 flex min-w-0 items-center gap-1.5 overflow-x-auto px-1 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap sm:overflow-visible"
+        role="group"
+        aria-label="Filter platform"
+      >
         {FILTERS.map((f) => {
           const count = ideas.filter((i) => f.match(i.platform)).length;
           const active = value === f.value;
@@ -46,7 +50,7 @@ export function BoardFilters({
               type="button"
               onClick={() => onChange(f.value)}
               aria-pressed={active}
-              className={`rounded-full px-4 py-1.5 text-sm font-bold shadow-card transition-all ${
+              className={`shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-bold shadow-card transition-all ${
                 active ? "bg-brand-ink text-white" : "bg-white hover:bg-brand-bg"
               }`}
             >
@@ -56,8 +60,8 @@ export function BoardFilters({
         })}
       </div>
 
-      <div className="flex items-center gap-1 self-end sm:self-auto">
-        <div className="flex items-center rounded-full bg-white p-1 shadow-card">
+      <div className="flex shrink-0 items-center gap-1">
+        <div className="hidden items-center rounded-full bg-white p-1 shadow-card sm:flex">
           <span className="flex items-center gap-1 rounded-full bg-brand-bg px-3 py-1 text-xs font-semibold">
             <Icon name="kanban" className="h-4 w-4" />
             Kanban

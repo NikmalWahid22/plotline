@@ -44,8 +44,8 @@ export function ParameterPanel(p: Props) {
   }
 
   return (
-    <Card className="p-6">
-      <form action={p.action} className="flex flex-col gap-6">
+    <Card className="p-4 sm:p-6">
+      <form action={p.action} className="flex flex-col gap-5 sm:gap-6">
         <div className="flex items-center justify-between">
           <h2 className="flex items-center gap-2 text-lg font-bold tracking-tight">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-bg">
@@ -146,7 +146,7 @@ export function ParameterPanel(p: Props) {
         {/* Gaya bahasa */}
         <fieldset className="min-w-0">
           <legend className="mb-2 text-sm font-bold">Tone of Voice</legend>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-row flex-wrap gap-2 lg:flex-col">
             {TONES.map((o) => {
               const selected = p.tone === o.value;
               return (
@@ -160,12 +160,14 @@ export function ParameterPanel(p: Props) {
                     className="peer sr-only"
                   />
                   <span
-                    className={`flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-brand-ink ${
-                      selected ? "bg-brand-bg ring-1 ring-brand-ink/10" : "hover:bg-brand-bg/60"
+                    className={`flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-brand-ink max-lg:rounded-full max-lg:py-2 ${
+                      selected
+                        ? "bg-brand-bg ring-1 ring-brand-ink/10 max-lg:bg-brand-ink max-lg:text-white max-lg:ring-0"
+                        : "hover:bg-brand-bg/60 max-lg:bg-brand-bg"
                     }`}
                   >
                     <span
-                      className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
+                      className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 max-lg:hidden ${
                         selected ? "border-brand-ink" : "border-brand-border"
                       }`}
                     >
@@ -173,9 +175,9 @@ export function ParameterPanel(p: Props) {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-xs font-bold">{o.label}</span>
-                      <span className="block truncate text-xs text-brand-muted">{o.desc}</span>
+                      <span className="block truncate text-xs text-brand-muted max-lg:hidden">{o.desc}</span>
                     </span>
-                    <Icon name={TONE_ICON[o.value]} className="h-4 w-4 shrink-0 text-brand-muted" />
+                    <Icon name={TONE_ICON[o.value]} className="h-4 w-4 shrink-0 text-brand-muted max-lg:hidden" />
                   </span>
                 </label>
               );

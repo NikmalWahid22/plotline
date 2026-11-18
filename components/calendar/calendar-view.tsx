@@ -8,6 +8,7 @@ import { CalendarHero } from "@/components/calendar/calendar-hero";
 import { CalendarControls } from "@/components/calendar/calendar-controls";
 import { DayColumn } from "@/components/calendar/day-column";
 import { BacklogPanel } from "@/components/calendar/backlog-panel";
+import { MobileWeek } from "@/components/calendar/mobile-week";
 import { addDays, weekDays } from "@/lib/dates";
 import type { CalendarIdea } from "@/lib/calendar";
 import type { Platform } from "@/lib/ideas";
@@ -88,7 +89,7 @@ export function CalendarView({
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4 lg:gap-8">
       <CalendarHero scheduledThisWeek={scheduledThisWeek} backlog={backlogAll.length} />
 
       <CalendarControls
@@ -101,10 +102,22 @@ export function CalendarView({
 
       {error && <Alert>{error}</Alert>}
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+      {/* HP dan tablet: strip 7 hari + daftar hari terpilih */}
+      <div className="lg:hidden">
+        <MobileWeek
+          days={days}
+          today={today}
+          ideas={visible}
+          backlog={backlog}
+          onSchedule={schedule}
+        />
+      </div>
+
+      {/* Desktop: matriks 7 kolom + backlog di samping */}
+      <div className="grid gap-6 max-lg:hidden lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
         <section className="min-w-0 rounded-card bg-white p-6 shadow-card">
           <div className="mb-5 flex items-center justify-between gap-3">
-            <h2 className="text-xl font-extrabold tracking-tight">Matriks Distribusi 7 Hari</h2>
+            <h2 className="text-heading">Matriks Distribusi 7 Hari</h2>
             <div className="flex gap-2">
               <button
                 type="button"
@@ -127,7 +140,7 @@ export function CalendarView({
 
           <div
             ref={scroller}
-            className="-mx-2 overflow-x-auto px-2 pb-4"
+            className="-mx-2 overflow-x-auto px-2 py-1 pb-4"
             style={{ scrollSnapType: "x proximity" }}
           >
             <div className="grid grid-flow-col auto-cols-[16rem] gap-5">

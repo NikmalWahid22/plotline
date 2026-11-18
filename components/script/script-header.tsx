@@ -29,7 +29,7 @@ function Tile({ label, value, icon }: { label: string; value: string; icon: Icon
         <p className="text-[11px] font-semibold uppercase tracking-wider text-brand-muted">
           {label}
         </p>
-        <p className="text-2xl font-extrabold tracking-tight">{value}</p>
+        <p className="text-2xl font-bold tracking-tight">{value}</p>
       </div>
       <Icon name={icon} className="h-7 w-7 text-brand-muted" />
     </div>
@@ -37,7 +37,7 @@ function Tile({ label, value, icon }: { label: string; value: string; icon: Icon
 }
 
 const PILL =
-  "inline-flex h-10 items-center gap-1.5 rounded-full px-4 text-sm font-bold transition-all disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex h-9 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-sm font-bold max-sm:px-2 sm:h-10 sm:px-4 transition-all disabled:cursor-not-allowed disabled:opacity-50";
 
 // Kartu header halaman script: navigasi, info ide, tombol aksi, dan ringkasan angka.
 export function ScriptHeader(p: Props) {
@@ -62,7 +62,7 @@ export function ScriptHeader(p: Props) {
   }
 
   return (
-    <Card className="flex flex-col gap-4 p-6">
+    <Card className="flex flex-col gap-3 p-4 sm:gap-4 sm:p-6">
       {/* Baris atas: kembali + chip info */}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Link
@@ -70,11 +70,13 @@ export function ScriptHeader(p: Props) {
           className="inline-flex items-center gap-1.5 rounded-full bg-brand-bg px-4 py-1.5 text-sm font-bold transition-colors hover:bg-brand-border"
         >
           <Icon name="back" className="h-[18px] w-[18px]" />
-          Kembali ke Papan
+          <span>
+            Kembali<span className="hidden sm:inline"> ke Papan</span>
+          </span>
         </Link>
 
         <div className="flex flex-wrap items-center gap-1">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-bg px-3 py-1 text-xs font-semibold text-brand-muted">
+          <span className="hidden items-center gap-1.5 rounded-full bg-brand-bg px-3 py-1 text-xs font-semibold text-brand-muted sm:inline-flex">
             <span className="h-2 w-2 rounded-full bg-brand-purple" />
             Niche: {p.nicheName}
           </span>
@@ -82,7 +84,8 @@ export function ScriptHeader(p: Props) {
             {platformName}
           </span>
           <span className="rounded-full bg-brand-lime px-3 py-1 text-xs font-semibold">
-            Status: {statusName}
+            <span className="hidden sm:inline">Status: </span>
+            {statusName}
           </span>
         </div>
       </div>
@@ -90,7 +93,7 @@ export function ScriptHeader(p: Props) {
       {/* Judul + aksi */}
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div className="max-w-3xl space-y-1.5">
-          <p className="flex flex-wrap items-center gap-2">
+          <p className="hidden flex-wrap items-center gap-2 sm:flex">
             <span className="rounded-full bg-brand-lime px-3.5 py-1 text-xs font-semibold">
               Shot List
             </span>
@@ -98,11 +101,11 @@ export function ScriptHeader(p: Props) {
               terstruktur per scene, siap dibawa syuting.
             </span>
           </p>
-          <h1 className="text-[28px] font-bold leading-[34px] tracking-[-0.015em] sm:text-4xl sm:leading-[42px] sm:tracking-[-0.02em]">
+          <h1 className="text-[22px] font-bold leading-[28px] tracking-[-0.015em] sm:text-4xl sm:leading-[42px] sm:tracking-[-0.02em]">
             Script: {p.title}
           </h1>
           {p.hook && (
-            <p className="text-brand-muted">&ldquo;{p.hook}&rdquo;</p>
+            <p className="line-clamp-2 text-sm text-brand-muted sm:line-clamp-none sm:text-base">&ldquo;{p.hook}&rdquo;</p>
           )}
         </div>
 
@@ -111,7 +114,7 @@ export function ScriptHeader(p: Props) {
             <button
               type="button"
               onClick={() => void copyScript()}
-              className={`${PILL} bg-brand-bg hover:bg-brand-border`}
+              className={`${PILL} bg-brand-bg hover:bg-brand-border max-sm:flex-1 max-sm:justify-center`}
             >
               <Icon name="copy" className="h-[18px] w-[18px]" />
               {copied ? "Tersalin" : "Salin Script"}
@@ -124,8 +127,8 @@ export function ScriptHeader(p: Props) {
             disabled={p.generating || outOfQuota}
             className={`${PILL} ${
               p.script
-                ? "bg-brand-bg hover:bg-brand-border"
-                : "bg-brand-lime shadow-card hover:brightness-105"
+                ? "bg-brand-bg hover:bg-brand-border max-sm:flex-1 max-sm:justify-center"
+                : "bg-brand-lime shadow-card hover:brightness-105 max-sm:w-full max-sm:justify-center"
             }`}
           >
             <Icon name="bolt" className="h-[18px] w-[18px]" />
@@ -143,7 +146,7 @@ export function ScriptHeader(p: Props) {
               type="button"
               onClick={p.onMarkFilming}
               disabled={p.marking}
-              className={`${PILL} bg-brand-lime px-6 shadow-card hover:brightness-105 active:scale-95`}
+              className={`${PILL} bg-brand-lime px-6 shadow-card hover:brightness-105 active:scale-95 max-sm:order-first max-sm:w-full max-sm:justify-center`}
             >
               <Icon name="film" className="h-[18px] w-[18px]" />
               {p.marking ? "Memindahkan..." : "Tandai Siap Syuting"}
@@ -153,7 +156,13 @@ export function ScriptHeader(p: Props) {
       </div>
 
       {/* Ringkasan angka asli dari script */}
-      <div className="grid grid-cols-2 gap-2 pt-1 md:grid-cols-4">
+      <p className="text-xs font-semibold text-brand-muted sm:hidden">
+        {p.script
+          ? `${p.script.scenes.length} scene · ${p.script.shots.length} shot · ${p.script.thumbnail_ideas.length} thumbnail · `
+          : ""}
+        Jatah {typeof p.remaining === "number" ? `${p.remaining}/${DAILY_LIMIT}` : "–"}
+      </p>
+      <div className="hidden grid-cols-2 gap-2 pt-1 sm:grid md:grid-cols-4">
         <Tile label="Jumlah Scene" value={p.script ? String(p.script.scenes.length) : "–"} icon="notes" />
         <Tile label="Jumlah Shot" value={p.script ? String(p.script.shots.length) : "–"} icon="film" />
         <Tile label="Ide Thumbnail" value={p.script ? String(p.script.thumbnail_ideas.length) : "–"} icon="image" />

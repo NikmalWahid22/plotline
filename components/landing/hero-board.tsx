@@ -70,7 +70,7 @@ export function HeroBoard() {
         <div
           role="tablist"
           aria-label="Filter platform contoh"
-          className="inline-flex max-w-full gap-0.5 overflow-x-auto rounded-full bg-brand-bg p-1"
+          className="inline-flex max-w-full gap-0.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-full bg-brand-bg p-1"
         >
           {FILTERS.map((f, i) => (
             <button
@@ -94,7 +94,7 @@ export function HeroBoard() {
         </span>
       </div>
 
-      <div className="-mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-2 sm:-mx-5 sm:px-5 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0">
+      <div className="-mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-2 sm:-mx-5 sm:px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0">
         {STATUSES.map((s) => {
           const cards = SAMPLES.filter(
             (c) => c.status === s.value && active.match(c.platform)

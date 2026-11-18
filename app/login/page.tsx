@@ -20,9 +20,9 @@ export default function LoginPage({
   searchParams: Promise<{ mode?: string }>;
 }) {
   return (
-    <main className="grid min-h-dvh lg:grid-cols-2">
+    <main className="mx-auto grid min-h-dvh w-full max-w-7xl lg:grid-cols-2 lg:gap-8">
       {/* Panel kiri: hanya tampil di layar lebar */}
-      <section className="hidden flex-col justify-between gap-6 p-6 lg:flex xl:p-8">
+      <section className="hidden flex-col justify-between gap-6 py-6 lg:flex lg:pl-12">
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-ink font-extrabold text-brand-lime">
             P
@@ -112,7 +112,7 @@ export default function LoginPage({
       </section>
 
       {/* Panel kanan: kartu login */}
-      <section className="flex items-center justify-center p-4 lg:p-6">
+      <section className="flex items-center justify-center p-4 lg:justify-end lg:py-6 lg:pl-0 lg:pr-12">
         <Suspense fallback={<AuthCard />}>
           <AuthSection searchParams={searchParams} />
         </Suspense>

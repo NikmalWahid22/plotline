@@ -8,10 +8,10 @@ Diperbarui: 18 November 2026. Dibandingkan dengan `PRD.md` (bagian 3, 6b, 7, 8) 
 
 | Bagian | Skor | Catatan |
 |---|---|---|
-| Fitur dan layar | 9,5 / 11 | Semua layar ada dan perilaku ke Supabase sudah terverifikasi. Kurang: seret kartu di Papan, dan polish HP |
+| Fitur dan layar | 10 / 11 | Semua layar ada, perilaku ke Supabase terverifikasi, tampilan HP sudah dirapikan. Kurang: seret kartu di Papan |
 | Kuota dan keamanan | 7,5 / 9 | RLS sudah terbukti lewat tes dua akun. Kurang: verifikasi `.env` sebelum push |
-| Rilis dan bukti | 0,5 / 5 | Belum deploy, belum diuji ke orang, belum ada case study |
-| **Total** | **17,5 / 25 = 70%** | Sisi produk sekitar **85%**, sisi rilis dan bukti sekitar **10%** |
+| Rilis dan bukti | 1,5 / 5 | Repo GitHub sudah dibuat dan README ada. Belum deploy, belum diuji ke orang, belum ada case study |
+| **Total** | **19 / 25 = 76%** | Sisi produk sekitar **90%**, sisi rilis dan bukti sekitar **30%** |
 
 Persentase di atas hitungan kasar dari daftar centang di bawah (✅ = 1, ◐ = 0,5, ❌ = 0), bukan pengukuran. Intinya: **produknya hampir jadi, tapi belum ada yang membuktikan dan membuatnya bisa dipakai orang lain.** Sisa pekerjaan Phase 1 terutama di rilis, pengujian, dan satu fitur inti (seret kartu).
 
@@ -39,9 +39,9 @@ Persentase di atas hitungan kasar dari daftar centang di bawah (✅ = 1, ◐ = 0
 | 3–4 | **Seret kartu di Papan** | ❌ |
 | 4–5 | Kalender mingguan | ✅ (kolom hari bisa digeser, seret-lepas, tombol Tambah, backlog di samping) |
 | 4–5 | Settings dan tampilan kuota | ✅ (profil, jatah AI, hapus semua ide, keluar) |
-| 4–5 | Polish | ◐ (token teks dan bobot font sudah rapi; HP baru Papan yang dirapikan) |
+| 4–5 | Polish | ✅ (token teks dan bobot font rapi; HP sudah dirapikan untuk Papan, Generate, Script dengan tab, dan Kalender dengan strip 7 hari) |
 
-Tambahan di luar PRD yang sudah jadi: tampilan **jatah habis**, **tab bar bawah di HP**, pilihan gaya bahasa di Generate, topik cepat di empty state, hapus semua ide dengan konfirmasi ketik.
+Tambahan di luar PRD yang sudah jadi: **landing page**, tampilan **jatah habis**, **tab bar bawah di HP**, pilihan gaya bahasa di Generate, topik cepat di empty state, hapus semua ide dengan konfirmasi ketik.
 
 ## 3. Kuota AI (PRD "Kuota AI")
 
@@ -65,9 +65,9 @@ Tambahan di luar PRD yang sudah jadi: tampilan **jatah habis**, **tab bar bawah 
 
 | Item | Status | Catatan |
 |---|---|---|
-| Repo GitHub dibuat | ❌ | |
+| Repo GitHub dibuat | ✅ | Dibuat 18 Nov 2026. **Push pertama belum dikonfirmasi**, jalankan cek riwayat commit sebelum push |
 | Deploy ke Vercel | ❌ | PRD menargetkan "deploy kosong" di minggu 1. Belum dilakukan |
-| `NOTES.md` dan README mutakhir | ◐ | `NOTES.md` ada, tapi log progres masih menunjukkan hampir semua kotak kosong, dan cerita debugging Gemini belum masuk |
+| `NOTES.md` dan README mutakhir | ◐ | `README.md` sudah dibuat (fitur, stack, cara menjalankan, keamanan, keterbatasan). `NOTES.md` masih perlu: log progres hampir semua kotak kosong, dan cerita debugging Gemini belum masuk |
 | Diuji ke 5 orang (3 bilang akan memakai lagi) | ❌ | Butuh link deploy lebih dulu |
 | Lighthouse performa di atas 85 | ❌ | Belum diukur |
 | Case study portofolio | ❌ | |
@@ -83,7 +83,7 @@ Kriteria sukses "topik sampai script + shot list kurang dari 2 menit": kemungkin
 3. **Hasil Generate belum otomatis tersimpan.** Kuota sudah terpotong saat generate, jadi refresh sebelum menyimpan membuang satu jatah. Pilihan: simpan otomatis sebagai draf, atau catat sebagai trade-off yang diterima.
 4. **Panggilan Gemini yang gagal tetap memotong satu jatah.** Kuota dipotong sebelum memanggil Gemini supaya tidak bisa diakali. Trade-off yang sudah disepakati.
 5. **Model default `gemini-3.5-flash-lite`** dengan model cadangan lewat env (`GEMINI_MODEL`, `GEMINI_FALLBACK_MODEL`).
-6. **Landing page tidak ada di PRD v1**, tapi ada di daftar rencana. `app/page.tsx` sekarang hanya mengarahkan ke `/dashboard`.
+6. **Landing page tidak ada di PRD v1**, tapi sudah dibuat (17 Nov 2026) dari desain Stitch: navbar, hero dengan mockup papan yang bisa difilter, fitur, cara kerja, banner penutup, footer, plus latar kotak-kotak. Klaim dan angka karangan dari desain dibuang (lihat `PHASE2-STITCH-GAP.md`). Halaman Privasi dan Syarat belum ada.
 
 ---
 
@@ -108,14 +108,14 @@ Beberapa bagian sudah lolos pemeriksaan tipe dan tampilannya sudah dilihat, Peri
 
 | # | Pekerjaan | Perkiraan | Kenapa di urutan ini |
 |---|---|---|---|
-| 1 | **Commit** semua pekerjaan, cek kelengkapan file, hapus `test-gemini.mjs`, `list-models.mjs`, `test-models.mjs` | 0,5 sesi | Titik aman sebelum lanjut |
+| 1 | ~~**Commit** semua pekerjaan, hapus skrip uji Gemini~~ **Selesai 18 Nov** | 0,5 sesi | Titik aman sebelum lanjut |
 | 2 | ~~**Verifikasi** daftar di bagian 7~~ **Selesai 18 Nov**, semua lulus | | |
 | 3 | **Seret kartu di Papan** (dnd-kit), dan ganti drag Kalender ke dnd-kit agar jalan di HP | 1–2 sesi | Satu-satunya fitur inti PRD yang masih kurang |
 | 4 | ~~**Tes RLS dua akun**~~ **Selesai 18 Nov**, tes validasi input (tes 20) belum dilaporkan | | Aturan keamanan #3 |
-| 5 | **Deploy**: cek secret, buat repo GitHub, hubungkan Vercel, isi Redirect URLs Supabase, nyalakan lagi Confirm email | 1 sesi | Membuka jalan ke pengujian orang |
-| 6 | **Update `NOTES.md` dan README** (log progres, cerita debugging Gemini) | 0,5 sesi | Bahan case study |
+| 5 | **Deploy**: cek secret, ~~buat repo GitHub~~ (sudah), push, hubungkan Vercel, isi Redirect URLs Supabase, nyalakan lagi Confirm email | 1 sesi | Membuka jalan ke pengujian orang |
+| 6 | **Update `NOTES.md`** (log progres, cerita debugging Gemini). ~~README~~ sudah selesai | 0,5 sesi | Bahan case study |
 | 7 | **Lighthouse** dan perbaikan seperlunya | 1 sesi | Kriteria sukses PRD |
-| 8 | **Responsive HP** untuk Generate, Script, Kalender (kurangi kartu dan elemen) | 1–2 sesi | Pengujian oleh orang kemungkinan besar lewat HP |
+| 8 | ~~**Responsive HP** untuk Generate, Script, Kalender~~ **Selesai 18 Nov** | | |
 | 9 | ~~**Landing page**~~ **Selesai 17 Nov** | | |
 | 10 | **Uji ke 5 orang**, tulis **case study** | 2–3 sesi | Bukti untuk portofolio |
 

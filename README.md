@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Plotline
 
-## Getting Started
+Visual content planner untuk kreator tech dan creative. Satu papan untuk ide, hook, script, shot list, dan jadwal konten.
 
-First, run the development server:
+> Status: **Phase 1 sekitar 70%**. Fitur inti jalan dan sudah diuji, belum di-deploy. Rinciannya di [`docs/PHASE1-PROGRESS.md`](docs/PHASE1-PROGRESS.md).
+
+## Yang bisa dilakukan
+
+- **Generator ide:** tulis topik, pilih platform dan gaya bahasa, dapatkan lima ide dengan hook 3 detik pertama (Gemini).
+- **Script dan shot list:** dari satu ide, dibuat script per scene, daftar shot yang bisa dicentang, dan ide thumbnail.
+- **Papan visual:** empat tahap (Ide & Riset, Syuting, Edit & Grading, Terbit), filter per platform, tambah ide cepat.
+- **Kalender mingguan:** seret ide dari backlog ke hari tayang.
+- **Pengaturan:** niche, platform, frekuensi posting, pemakaian jatah AI, hapus semua ide.
+- **Jatah AI:** 10 generate per akun per hari, reset tengah malam WIB, dihitung di database.
+
+## Stack
+
+| Bagian | Pilihan |
+|---|---|
+| Framework | Next.js 16 (App Router, Cache Components), TypeScript |
+| Styling | Tailwind CSS v4 |
+| Database dan login | Supabase (Postgres, Auth, Row Level Security) |
+| AI | Gemini API (free tier) lewat `@google/genai`, dipanggil dari server |
+| Rencana deploy | Vercel |
+
+## Menjalankan di komputer sendiri
+
+Butuh Node.js 20 atau lebih baru, dan project Supabase (gratis).
+
+```bash
+git clone <url-repo-ini>
+cd <nama-folder>
+npm install
+cp .env.example .env.local
+```
+
+Isi `.env.local`:
+
+| Variabel | Keterangan |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | URL project Supabase |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Publishable key Supabase |
+| `GEMINI_API_KEY` | API key dari Google AI Studio. **Jangan di-commit** |
+| `GEMINI_MODEL` | Opsional. Default `gemini-3.5-flash-lite` |
+| `GEMINI_FALLBACK_MODEL` | Opsional. Model cadangan kalau model utama gagal |
+
+Siapkan database: buka **SQL Editor** di dashboard Supabase, jalankan isi `supabase/schema.sql`. File itu membuat tabel, kebijakan RLS, dan fungsi kuota.
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Keamanan
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- API key Gemini hanya dipakai di server, tidak pernah dikirim ke browser.
+- RLS aktif di semua tabel. Sudah dites dengan dua akun: akun lain tidak bisa membaca, mengubah, atau menghapus data akun pertama, termasuk lewat URL langsung.
+- Semua server action memvalidasi input (UUID, tanggal, enum, panjang teks).
+- Kuota dipotong di database sebelum Gemini dipanggil, jadi tidak bisa diakali dari browser.
+- Pesan error dipetakan ke bahasa yang ramah, tidak menampilkan error mentah.
 
-## Learn More
+## Struktur
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/          halaman dan server action
+components/   komponen UI per fitur (board, calendar, generate, landing, ...)
+lib/          fungsi bantu, koneksi Supabase, pemanggil Gemini
+supabase/     skema SQL
+docs/         catatan proyek
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Dokumen
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Dokumen | Isi |
+|---|---|
+| [`docs/PRD.md`](docs/PRD.md) | Kebutuhan produk dan batasan Phase 1 |
+| [`docs/DESIGN.md`](docs/DESIGN.md) | Sistem desain (warna, huruf, kartu) |
+| [`docs/NOTES.md`](docs/NOTES.md) | Keputusan teknis dan catatan masalah |
+| [`docs/PHASE1-PROGRESS.md`](docs/PHASE1-PROGRESS.md) | Seberapa jauh Phase 1, dan sisanya |
+| [`docs/PHASE2-STITCH-GAP.md`](docs/PHASE2-STITCH-GAP.md) | Fitur desain yang sengaja ditunda ke Phase 2 |
+| [`docs/TEST-SUPABASE.md`](docs/TEST-SUPABASE.md) | Checklist tes data, RLS, dan kuota |
 
-## Deploy on Vercel
+## Keterbatasan yang diketahui
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Seret kartu di Papan belum ada (pindah status lewat tombol panah). Seret-lepas di Kalender memakai drag bawaan browser, jadi belum jalan di layar sentuh.
+- Hasil generate baru tersimpan saat tombol Simpan ditekan.
+- Panggilan Gemini yang gagal tetap memotong satu jatah.
+- Tampilan HP untuk Generate, Script, dan Kalender masih padat.
+- Belum ada halaman Privasi dan Syarat.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Lisensi
+
+Belum ditentukan.

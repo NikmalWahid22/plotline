@@ -2,7 +2,7 @@
 
 Visual content planner untuk kreator tech dan creative. Satu papan untuk ide, hook, script, shot list, dan jadwal konten.
 
-> Status: **Phase 1 sekitar 70%**. Fitur inti jalan dan sudah diuji, belum di-deploy. Rinciannya di [`docs/PHASE1-PROGRESS.md`](docs/PHASE1-PROGRESS.md).
+> Status: **Phase 1 sekitar 86%**. Fitur inti jalan, sudah diuji, dan sudah online di **[plotline-creator.vercel.app](https://plotline-creator.vercel.app)**. Rinciannya di [`docs/PHASE1-PROGRESS.md`](docs/PHASE1-PROGRESS.md).
 
 ## Yang bisa dilakukan
 
@@ -21,7 +21,7 @@ Visual content planner untuk kreator tech dan creative. Satu papan untuk ide, ho
 | Styling | Tailwind CSS v4 |
 | Database dan login | Supabase (Postgres, Auth, Row Level Security) |
 | AI | Gemini API (free tier) lewat `@google/genai`, dipanggil dari server |
-| Rencana deploy | Vercel |
+| Deploy | Vercel |
 
 ## Menjalankan di komputer sendiri
 
@@ -86,7 +86,6 @@ docs/         catatan proyek
 - Seret kartu di Papan belum ada (pindah status lewat tombol panah). Seret-lepas di Kalender memakai drag bawaan browser, jadi belum jalan di layar sentuh.
 - Hasil generate baru tersimpan saat tombol Simpan ditekan.
 - Panggilan Gemini yang gagal tetap memotong satu jatah.
-- Tampilan HP untuk Generate, Script, dan Kalender masih padat.
 - Belum ada halaman Privasi dan Syarat.
 
 ## Lisensi

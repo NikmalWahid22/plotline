@@ -1,5 +1,6 @@
 "use client";
 
+import { useDraggable } from "@dnd-kit/core";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { deleteIdea, moveIdea } from "@/app/dashboard/actions";
@@ -15,6 +16,10 @@ const ARROW_BTN =
 export function IdeaCard({ idea }: { idea: BoardIdea }) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: idea.id,
+  });
 
   const index = STATUSES.findIndex((s) => s.value === idea.status);
   const prev = index > 0 ? STATUSES[index - 1] : null;
@@ -39,9 +44,21 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
 
   return (
     <Card
-      className={`flex flex-col gap-4 p-6 transition-all duration-200 hover:-translate-y-1 ${
-        pending ? "opacity-60" : ""
-      }`}
+      ref={setNodeRef}
+      style={
+        transform
+          ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0) rotate(1.5deg)` }
+          : undefined
+      }
+      // Seluruh kartu bisa diseret di layar md ke atas. Di HP hanya satu kolom tampil,
+      // jadi pindah lewat tombol panah.
+      {...listeners}
+      {...{ ...attributes, role: undefined, tabIndex: undefined }}
+      className={`flex flex-col gap-3 p-4 md:cursor-grab md:gap-4 md:p-6 ${
+        isDragging
+          ? "relative z-50 cursor-grabbing shadow-2xl"
+          : "transition-all duration-200 md:hover:-translate-y-1"
+      } ${pending ? "opacity-60" : ""}`}
     >
       <div className="flex items-center justify-between gap-2">
         <PlatformChip platform={idea.platform} />
@@ -55,7 +72,7 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h3 className="text-lg font-bold leading-snug tracking-tight">
+        <h3 className="text-base font-bold leading-snug tracking-tight md:text-lg">
           <Link href={`/ideas/${idea.id}`} className="hover:underline">
             {idea.title}
           </Link>

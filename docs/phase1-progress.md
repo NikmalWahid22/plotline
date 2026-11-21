@@ -1,6 +1,6 @@
 # Plotline — Progres Phase 1
 
-Diperbarui: 20 November 2026. Dibandingkan dengan `PRD.md` (bagian 3, 6b, 7, 8) dan `NOTES.md`.
+Diperbarui: 21 November 2026. Dibandingkan dengan `PRD.md` (bagian 3, 6b, 7, 8) dan `NOTES.md`.
 
 **Legenda:** ✅ selesai · ◐ sebagian · ❌ belum
 
@@ -8,12 +8,12 @@ Diperbarui: 20 November 2026. Dibandingkan dengan `PRD.md` (bagian 3, 6b, 7, 8) 
 
 | Bagian | Skor | Catatan |
 |---|---|---|
-| Fitur dan layar | 10 / 11 | Semua layar ada, perilaku ke Supabase terverifikasi, tampilan HP sudah dirapikan. Kurang: seret kartu di Papan |
+| Fitur dan layar | 11 / 11 | Semua layar ada, seret kartu di Papan jalan (dnd-kit), perilaku ke Supabase terverifikasi, tampilan HP sudah dirapikan |
 | Kuota dan keamanan | 8 / 9 | RLS terbukti lewat tes dua akun dan riwayat git bersih dari secret. Kurang: hasil generate belum otomatis tersimpan |
 | Rilis dan bukti | 3,5 / 5 | Sudah deploy ke Vercel dan Lighthouse lolos. Belum diuji ke orang, belum ada case study, `NOTES.md` belum mutakhir |
-| **Total** | **21,5 / 25 = 86%** | Sisi produk sekitar **90%**, sisi rilis dan bukti sekitar **70%** |
+| **Total** | **22,5 / 25 = 90%** | Sisi produk sekitar **95%**, sisi rilis dan bukti sekitar **70%** |
 
-Persentase di atas hitungan kasar dari daftar centang di bawah (✅ = 1, ◐ = 0,5, ❌ = 0), bukan pengukuran. Intinya: **produknya sudah online dan lolos Lighthouse, tapi belum diuji orang lain.** Sisa pekerjaan Phase 1 terutama di pengujian pengguna, case study, dan satu fitur inti (seret kartu).
+Persentase di atas hitungan kasar dari daftar centang di bawah (✅ = 1, ◐ = 0,5, ❌ = 0), bukan pengukuran. Intinya: **produknya sudah online dan lolos Lighthouse, tapi belum diuji orang lain.** Sisa pekerjaan Phase 1 terutama di pengujian pengguna, case study, dan `NOTES.md`.
 
 ---
 
@@ -23,7 +23,7 @@ Persentase di atas hitungan kasar dari daftar centang di bawah (✅ = 1, ◐ = 0
 |---|---|---|---|
 | **Idea Generator** | ✅ | Input topik, platform, dan gaya bahasa. Lima ide dengan hook. Simpan satu atau semua. Prompt dibatasi (anti prompt-injection), output divalidasi | Hasil belum otomatis tersimpan (lihat Penyimpangan #3) |
 | **Script + Shot List** | ✅ | Script per scene, daftar shot, ide thumbnail. Salin script. Buat ulang. Centang shot selesai tersimpan di database. Tandai "Siap Syuting" | Belum bisa diedit (Phase 2) |
-| **Papan Visual** | ◐ | Empat kolom status, filter platform, tambah ide cepat, pindah lewat tombol panah, hapus. Kartu menampilkan status script | **Seret kartu antar kolom belum ada** (PRD menyebut dnd-kit) |
+| **Papan Visual** | ✅ | Empat kolom status, filter platform, tambah ide cepat, **seret kartu antar kolom (dnd-kit, langsung pindah, balik otomatis kalau gagal)**, tombol panah untuk HP dan keyboard, hapus. Kartu menampilkan status script | Seret di HP belum ada karena hanya satu kolom tampil, dipakai tombol panah |
 
 ## 2. Layar dan alur (PRD "Urutan layar yang dikerjakan")
 
@@ -36,7 +36,7 @@ Persentase di atas hitungan kasar dari daftar centang di bawah (✅ = 1, ◐ = 0
 | 2–3 | Idea Generator | ✅ |
 | 2–3 | Loading dan error state | ✅ (kerangka loading, pesan error ramah per jenis kegagalan) |
 | 3–4 | Detail ide (script + shot list) | ✅ |
-| 3–4 | **Seret kartu di Papan** | ❌ |
+| 3–4 | **Seret kartu di Papan** | ✅ (21 Nov 2026) |
 | 4–5 | Kalender mingguan | ✅ (kolom hari bisa digeser, seret-lepas, tombol Tambah, backlog di samping) |
 | 4–5 | Settings dan tampilan kuota | ✅ (profil, jatah AI, hapus semua ide, keluar) |
 | 4–5 | Polish | ✅ (token teks dan bobot font rapi; HP sudah dirapikan untuk Papan, Generate, Script dengan tab, dan Kalender dengan strip 7 hari) |
@@ -110,7 +110,7 @@ Beberapa bagian sudah lolos pemeriksaan tipe dan tampilannya sudah dilihat, Peri
 |---|---|---|---|
 | 1 | ~~**Commit** semua pekerjaan, hapus skrip uji Gemini~~ **Selesai 18 Nov** | 0,5 sesi | Titik aman sebelum lanjut |
 | 2 | ~~**Verifikasi** daftar di bagian 7~~ **Selesai 18 Nov**, semua lulus | | |
-| 3 | **Seret kartu di Papan** (dnd-kit), dan ganti drag Kalender ke dnd-kit agar jalan di HP | 1–2 sesi | Satu-satunya fitur inti PRD yang masih kurang |
+| 3 | ~~**Seret kartu di Papan** (dnd-kit)~~ **Selesai 21 Nov**. Opsional: ganti drag Kalender ke dnd-kit agar jalan di layar sentuh | 0,5–1 sesi | |
 | 4 | ~~**Tes RLS dua akun**~~ **Selesai 18 Nov**, tes validasi input (tes 20) belum dilaporkan | | Aturan keamanan #3 |
 | 5 | ~~**Deploy**~~ **Selesai 20 Nov**. Sisa: pastikan Redirect URLs Supabase cocok dengan `plotline-creator.vercel.app`, putuskan Confirm email sebelum link dibagikan, hapus proyek Vercel ganda | 0,5 sesi | Membuka jalan ke pengujian orang |
 | 6 | **Update `NOTES.md`** (log progres, cerita debugging Gemini). ~~README~~ sudah selesai | 0,5 sesi | Bahan case study |
@@ -123,7 +123,7 @@ Dengan 10–12 jam per minggu dan 1 sesi sekitar 2–3 jam, urutan di atas kira-
 
 ## 9. Definisi "Phase 1 selesai"
 
-- [ ] Tiga fitur inti jalan di versi deploy, termasuk seret kartu di Papan
+- [x] Tiga fitur inti jalan, termasuk seret kartu di Papan (perlu cek ulang di versi deploy setelah push)
 - [x] RLS terbukti lewat tes dua akun (18 Nov 2026)
 - [x] Tidak ada secret di repo (riwayat git dicek 20 Nov 2026)
 - [ ] Dipakai 5 orang, minimal 3 bilang akan memakai lagi

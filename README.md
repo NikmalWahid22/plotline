@@ -2,13 +2,13 @@
 
 Visual content planner untuk kreator tech dan creative. Satu papan untuk ide, hook, script, shot list, dan jadwal konten.
 
-> Status: **Phase 1 sekitar 86%**. Fitur inti jalan, sudah diuji, dan sudah online di **[plotline-creator.vercel.app](https://plotline-creator.vercel.app)**. Rinciannya di [`docs/PHASE1-PROGRESS.md`](docs/PHASE1-PROGRESS.md).
+> Status: **Phase 1 sekitar 90%**. Fitur inti jalan, sudah diuji, dan sudah online di **[plotline-creator.vercel.app](https://plotline-creator.vercel.app)**. Rinciannya di [`docs/PHASE1-PROGRESS.md`](docs/PHASE1-PROGRESS.md).
 
 ## Yang bisa dilakukan
 
 - **Generator ide:** tulis topik, pilih platform dan gaya bahasa, dapatkan lima ide dengan hook 3 detik pertama (Gemini).
 - **Script dan shot list:** dari satu ide, dibuat script per scene, daftar shot yang bisa dicentang, dan ide thumbnail.
-- **Papan visual:** empat tahap (Ide & Riset, Syuting, Edit & Grading, Terbit), filter per platform, tambah ide cepat.
+- **Papan visual:** empat tahap (Ide & Riset, Syuting, Edit & Grading, Terbit), seret kartu antar tahap, filter per platform, tambah ide cepat.
 - **Kalender mingguan:** seret ide dari backlog ke hari tayang.
 - **Pengaturan:** niche, platform, frekuensi posting, pemakaian jatah AI, hapus semua ide.
 - **Jatah AI:** 10 generate per akun per hari, reset tengah malam WIB, dihitung di database.
@@ -19,6 +19,7 @@ Visual content planner untuk kreator tech dan creative. Satu papan untuk ide, ho
 |---|---|
 | Framework | Next.js 16 (App Router, Cache Components), TypeScript |
 | Styling | Tailwind CSS v4 |
+| Seret-lepas | dnd-kit |
 | Database dan login | Supabase (Postgres, Auth, Row Level Security) |
 | AI | Gemini API (free tier) lewat `@google/genai`, dipanggil dari server |
 | Deploy | Vercel |
@@ -83,7 +84,7 @@ docs/         catatan proyek
 
 ## Keterbatasan yang diketahui
 
-- Seret kartu di Papan belum ada (pindah status lewat tombol panah). Seret-lepas di Kalender memakai drag bawaan browser, jadi belum jalan di layar sentuh.
+- Seret kartu di Papan jalan di layar md ke atas. Di HP hanya satu kolom tampil, jadi pindah status lewat tombol panah. Seret-lepas di Kalender memakai drag bawaan browser, jadi belum jalan di layar sentuh (di HP dipakai tombol Tambah).
 - Hasil generate baru tersimpan saat tombol Simpan ditekan.
 - Panggilan Gemini yang gagal tetap memotong satu jatah.
 - Belum ada halaman Privasi dan Syarat.

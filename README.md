@@ -2,7 +2,7 @@
 
 Visual content planner untuk kreator tech dan creative. Satu papan untuk ide, hook, script, shot list, dan jadwal konten.
 
-> Status: **Phase 1 sekitar 90%**. Fitur inti jalan, sudah diuji, dan sudah online di **[plotline-creator.vercel.app](https://plotline-creator.vercel.app)**. Rinciannya di [`docs/PHASE1-PROGRESS.md`](docs/PHASE1-PROGRESS.md).
+> Status: **Phase 1 selesai**. Fitur inti jalan, sudah diuji, dan sudah online di **[plotline-creator.vercel.app](https://plotline-creator.vercel.app)**. Rinciannya di [`docs/PHASE1-PROGRESS.md`](docs/PHASE1-PROGRESS.md).
 
 ## Yang bisa dilakukan
 

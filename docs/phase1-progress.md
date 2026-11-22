@@ -1,6 +1,6 @@
 # Plotline — Progres Phase 1
 
-Diperbarui: 21 November 2026. Dibandingkan dengan `PRD.md` (bagian 3, 6b, 7, 8) dan `NOTES.md`.
+Diperbarui: 22 November 2026. **Phase 1 dinyatakan selesai.** Dibandingkan dengan `PRD.md` (bagian 3, 6b, 7, 8) dan `NOTES.md`.
 
 **Legenda:** ✅ selesai · ◐ sebagian · ❌ belum
 
@@ -10,10 +10,10 @@ Diperbarui: 21 November 2026. Dibandingkan dengan `PRD.md` (bagian 3, 6b, 7, 8) 
 |---|---|---|
 | Fitur dan layar | 11 / 11 | Semua layar ada, seret kartu di Papan jalan (dnd-kit), perilaku ke Supabase terverifikasi, tampilan HP sudah dirapikan |
 | Kuota dan keamanan | 8 / 9 | RLS terbukti lewat tes dua akun dan riwayat git bersih dari secret. Kurang: hasil generate belum otomatis tersimpan |
-| Rilis dan bukti | 3,5 / 5 | Sudah deploy ke Vercel dan Lighthouse lolos. Belum diuji ke orang, belum ada case study, `NOTES.md` belum mutakhir |
-| **Total** | **22,5 / 25 = 90%** | Sisi produk sekitar **95%**, sisi rilis dan bukti sekitar **70%** |
+| Rilis dan bukti | 5 / 5 | Deploy, Lighthouse, `NOTES.md`, README, dan case study proses selesai. Uji ke 5 orang diganti case study proses (tidak dihitung) |
+| **Total** | **24 / 25 = 96%** | Satu-satunya kekurangan: hasil Generate belum otomatis tersimpan |
 
-Persentase di atas hitungan kasar dari daftar centang di bawah (✅ = 1, ◐ = 0,5, ❌ = 0), bukan pengukuran. Intinya: **produknya sudah online dan lolos Lighthouse, tapi belum diuji orang lain.** Sisa pekerjaan Phase 1 terutama di pengujian pengguna, case study, dan `NOTES.md`.
+Persentase di atas hitungan kasar dari daftar centang di bawah (✅ = 1, ◐ = 0,5, ❌ = 0), bukan pengukuran. Intinya: **produknya online, lolos Lighthouse, dan terdokumentasi.** Yang belum ada adalah bukti dari pengguna lain, dan itu masuk langkah berikutnya sebelum Phase 2.
 
 ---
 
@@ -67,10 +67,10 @@ Tambahan di luar PRD yang sudah jadi: **landing page**, tampilan **jatah habis**
 |---|---|---|
 | Repo GitHub dibuat | ✅ | `NikmalWahid22/plotline`, sudah di-push |
 | Deploy ke Vercel | ✅ | Live di `https://plotline-creator.vercel.app`. Alur daftar, generate, script, dan jadwal sudah dites di alamat deploy (20 Nov 2026). Build sempat gagal karena file `components/board/page.tsx` nyasar, sudah dihapus |
-| `NOTES.md` dan README mutakhir | ◐ | `README.md` sudah dibuat (fitur, stack, cara menjalankan, keamanan, keterbatasan). `NOTES.md` masih perlu: log progres hampir semua kotak kosong, dan cerita debugging Gemini belum masuk |
-| Diuji ke 5 orang (3 bilang akan memakai lagi) | ❌ | Butuh link deploy lebih dulu. **Ditunda** karena sulit mencari penguji |
+| `NOTES.md` dan README mutakhir | ✅ | `README.md` dan `NOTES.md` sudah diperbarui (21 Nov 2026): keputusan, 8 masalah dan solusi, hasil terukur, log progres |
+| Diuji ke 5 orang (3 bilang akan memakai lagi) | ➖ | **Diganti** dengan case study proses (keputusan 21 Nov 2026) karena sulit mencari penguji. Uji ke 2–3 orang jadi langkah sebelum Phase 2 |
 | Lighthouse performa di atas 85 | ✅ | Diukur 20 Nov 2026 di alamat deploy, Mobile. `/dashboard` incognito: 95 dan 96 (Accessibility 95, Best Practices 100, SEO 100). `/login`: 92 dan 92 (95/100/91). Landing: 87 dan 95 incognito (Accessibility 91, Best Practices 100, SEO 91). Mode biasa lebih rendah (71–77) karena ekstensi browser |
-| Case study portofolio | ❌ | **Ditunda**, menunggu hasil uji pengguna. Bagian cerita dan keputusan teknis bisa ditulis lebih dulu |
+| Case study portofolio | ✅ | Versi proses selesai 22 Nov 2026 (masalah, batasan, keputusan, debugging, hasil terukur, yang belum) |
 
 Kriteria sukses "topik sampai script + shot list kurang dari 2 menit": kemungkinan terpenuhi (generate ide beberapa detik, script beberapa detik), tapi **belum diukur**.
 
@@ -113,11 +113,11 @@ Beberapa bagian sudah lolos pemeriksaan tipe dan tampilannya sudah dilihat, Peri
 | 3 | ~~**Seret kartu di Papan** (dnd-kit)~~ **Selesai 21 Nov**. Opsional: ganti drag Kalender ke dnd-kit agar jalan di layar sentuh | 0,5–1 sesi | |
 | 4 | ~~**Tes RLS dua akun**~~ **Selesai 18 Nov**, tes validasi input (tes 20) belum dilaporkan | | Aturan keamanan #3 |
 | 5 | ~~**Deploy**~~ **Selesai 20 Nov**. Sisa: pastikan Redirect URLs Supabase cocok dengan `plotline-creator.vercel.app`, putuskan Confirm email sebelum link dibagikan, hapus proyek Vercel ganda | 0,5 sesi | Membuka jalan ke pengujian orang |
-| 6 | **Update `NOTES.md`** (log progres, cerita debugging Gemini). ~~README~~ sudah selesai | 0,5 sesi | Bahan case study |
+| 6 | ~~**Update `NOTES.md`**~~ **Selesai 21 Nov** | | |
 | 7 | ~~**Lighthouse**~~ **Selesai 20 Nov**, semua halaman di atas 85 | | |
 | 8 | ~~**Responsive HP** untuk Generate, Script, Kalender~~ **Selesai 18 Nov** | | |
 | 9 | ~~**Landing page**~~ **Selesai 17 Nov** | | |
-| 10 | **Uji ke 5 orang**, tulis **case study** (**ditunda**: sulit mencari penguji. Mulai dari 2–3 orang dulu, bagian cerita bisa ditulis lebih awal tanpa data pengguna) | 2–3 sesi | Bukti untuk portofolio |
+| 10 | ~~**Case study**~~ **Selesai 22 Nov** (versi proses). ~~Uji ke 5 orang~~ **diganti**; uji ke 2–3 orang jadi langkah sebelum Phase 2 | | |
 
 Dengan 10–12 jam per minggu dan 1 sesi sekitar 2–3 jam, urutan di atas kira-kira **3–4 minggu** sampai Phase 1 benar-benar selesai.
 
@@ -126,8 +126,8 @@ Dengan 10–12 jam per minggu dan 1 sesi sekitar 2–3 jam, urutan di atas kira-
 - [x] Tiga fitur inti jalan, termasuk seret kartu di Papan (perlu cek ulang di versi deploy setelah push)
 - [x] RLS terbukti lewat tes dua akun (18 Nov 2026)
 - [x] Tidak ada secret di repo (riwayat git dicek 20 Nov 2026)
-- [ ] Dipakai 5 orang, minimal 3 bilang akan memakai lagi
+- [x] ~~Dipakai 5 orang, minimal 3 bilang akan memakai lagi~~ Diganti case study proses (uji ke 2–3 orang dilakukan sebelum Phase 2)
 - [x] Lighthouse performa di atas 85 (20 Nov 2026)
-- [ ] README, `NOTES.md`, dan case study selesai
+- [x] README, `NOTES.md`, dan case study selesai (22 Nov 2026)
 
 Semua yang di luar daftar ini (Google Calendar, kalender Bulanan, pencarian, edit script, ekspor PDF, notifikasi, pembayaran, dan lainnya) masuk **Phase 2**. Rinciannya ada di `PHASE2-STITCH-GAP.md`.

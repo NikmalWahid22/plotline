@@ -87,7 +87,7 @@ docs/         catatan proyek
 - Seret kartu di Papan jalan di layar md ke atas. Di HP hanya satu kolom tampil, jadi pindah status lewat tombol panah. Seret-lepas di Kalender memakai drag bawaan browser, jadi belum jalan di layar sentuh (di HP dipakai tombol Tambah).
 - Hasil generate baru tersimpan saat tombol Simpan ditekan.
 - Panggilan Gemini yang gagal tetap memotong satu jatah.
-- Belum ada halaman Privasi dan Syarat.
+- Pendaftaran akun baru ditutup (proyek pribadi). Confirm email aktif dengan SMTP bawaan Supabase, yang hanya mengirim ke anggota tim. Dibuka lagi setelah memakai domain sendiri.
 
 ## Lisensi
 

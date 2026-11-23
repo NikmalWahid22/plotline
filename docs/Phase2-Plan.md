@@ -22,17 +22,19 @@ Plotline sekarang proyek pribadi tanpa penguji, jadi Phase 2 punya tiga tujuan:
 
 ## Sprint 1: Siap publik (4 sesi)
 
-Status 23 Nov 2026: item 1, 3, dan 5 selesai dan dites. Item 4 dicoret (alasannya di tabel). Item 2 belum.
+**Sprint 1 selesai (23 Nov 2026).** Item 1, 3, dan 5 selesai dan dites. Item 4 dicoret (alasannya di tabel). Item 2 diselesaikan dengan jalan 2: Confirm email dinyalakan dengan SMTP bawaan Supabase, dan pendaftaran umum ditutup lewat saklar `SIGNUP_OPEN` di `lib/signup.ts`.
 
 | # | Pekerjaan | Usaha | Selesai jika |
 |---|---|---|---|
 | 1 ✅ | Halaman **Privasi** dan **Syarat** (isi singkat dan jujur: data apa yang disimpan, ke mana dikirim, cara hapus) | S | Dua halaman bisa dibuka dari footer, tautan "Segera hadir" di footer jadi aktif |
-| 2 | **Confirm email** dinyalakan dengan SMTP sendiri (misalnya Resend, gratis) | M | Daftar akun baru harus klik tautan di email, lalu bisa masuk. Redirect URLs Supabase tetap cocok |
+| 2 ✅ | **Confirm email** dinyalakan dengan SMTP sendiri (misalnya Resend, gratis) | M | Daftar akun baru harus klik tautan di email, lalu bisa masuk. Redirect URLs Supabase tetap cocok |
 | 3 ✅ | Halaman **404 ramah** (termasuk "Ide tidak ditemukan") | S | URL ide yang tidak ada atau milik akun lain menampilkan halaman bergaya aplikasi, bukan 404 polos |
 | 4 ❌ | ~~**Kembalikan jatah** kalau panggilan Gemini gagal~~ **Dicoret.** Fungsi pengembalian harus bisa dipanggil dari aplikasi, jadi pengguna bisa memanggilnya sendiri lewat browser setelah tiap generate dan jatahnya tidak pernah habis. Tanpa kunci admin di server tidak ada cara aman, jadi trade-off "gagal tetap memotong jatah" dipertahankan | S–M | Matikan internet atau pakai key palsu, generate: jatah tidak berkurang. Tes 19 di `TEST-SUPABASE.md` diperbarui |
 | 5 ✅ | Chip **"Jatah"** di hero Generate ikut berkurang setelah generate | S | Setelah generate, angka di chip langsung turun tanpa refresh |
 
-Catatan: item 2 butuh akun layanan email dan pengaturan DNS bila memakai domain sendiri. Kalau terasa berat, mulai dari SMTP bawaan Supabase untuk uji, lalu pindah.
+Catatan keputusan item 2: SMTP bawaan Supabase hanya mengirim ke anggota tim dan dibatasi 2 email per jam, sedangkan Brevo dan Resend butuh domain sendiri. Selama belum ada domain, pendaftaran ditutup. Untuk membukanya: beli domain, pasang SMTP custom, lalu ubah `SIGNUP_OPEN` ke `true`.
+
+Catatan lama: item 2 butuh akun layanan email dan pengaturan DNS bila memakai domain sendiri. Kalau terasa berat, mulai dari SMTP bawaan Supabase untuk uji, lalu pindah.
 
 ## Sprint 2: Inti produk, bagian satu (4 sesi)
 

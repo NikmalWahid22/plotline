@@ -37,6 +37,16 @@ File ini dicatat sambil jalan. Tujuannya: ingat kenapa sebuah keputusan diambil,
 | **Landing: angka dan klaim karangan dari desain Stitch dibuang** (testimoni, statistik, harga, metrik) | Tidak boleh memajang data palsu di produk sungguhan | Landing terlihat lebih sederhana dari desain awal |
 | **Seret Kalender masih drag bawaan browser** | Cepat dibuat, tanpa dependensi | Tidak jalan di layar sentuh, di HP dipakai tombol "Tambah" |
 
+### Keputusan Sprint 1 (23 Nov 2026)
+
+| Keputusan | Alasan | Trade-off |
+|---|---|---|
+| **Jatah tidak dikembalikan saat Gemini gagal** | Fungsi pengembalian harus bisa dipanggil dari aplikasi, jadi pengguna bisa memanggilnya sendiri lewat browser setelah tiap generate dan jatah tidak pernah habis. Gemini tidak bisa membuktikan ke database bahwa panggilannya gagal | Satu jatah hilang tiap kegagalan |
+| **Pendaftaran ditutup, Confirm email dinyalakan dengan SMTP bawaan** | SMTP bawaan Supabase hanya mengirim ke anggota tim (2 email per jam). Brevo dan Resend butuh domain sendiri, dan pengirim `@gmail.com` gagal ke penerima Gmail sejak aturan baru Gmail dan Yahoo | Hanya pemilik yang bisa punya akun sampai ada domain. Landing dan form daftar dibuat jujur lewat saklar `SIGNUP_OPEN` |
+| **Halaman publik didaftarkan di `PUBLIC_PATHS`** (`lib/supabase/proxy.ts`) | `/privasi` dan `/syarat` sempat dialihkan ke login karena bukan bagian daftar publik | Halaman publik baru harus ditambahkan manual ke daftar itu |
+| **Halaman 404 tidak membedakan ide yang dihapus dan ide milik akun lain** | Tidak membocorkan apakah sebuah ide ada | Pesan sedikit kurang spesifik |
+| **Hero Generate dirender di dalam komponen Generator** | Chip Jatah ikut berubah setelah generate karena memakai state yang sama dengan batang jatah | Komponen hero ikut dibundel ke sisi klien |
+
 ## Keamanan (wajib dipatuhi)
 
 1. API key Gemini hanya dipanggil dari server, tidak pernah dari browser.
@@ -164,14 +174,12 @@ Format: gejala, penyebab, solusi, pelajaran.
 
 - **Belum diuji ke pengguna lain.** Semua pengujian dilakukan sendiri. Kriteria PRD "3 dari 5 orang mau pakai lagi" belum terpenuhi.
 - Seret di Kalender belum jalan di layar sentuh (rencana: ganti ke dnd-kit).
-- Halaman Privasi dan Syarat belum ada (wajib sebelum link disebar luas).
 - Hasil Generate baru tersimpan saat tombol Simpan ditekan.
-- Chip "Jatah" di hero Generate (desktop) belum ikut berkurang setelah generate.
-- Confirm email perlu dinyalakan (dengan SMTP sendiri) sebelum dibuka untuk publik, supaya akun palsu tidak menghabiskan kuota Gemini.
+- Pendaftaran umum ditutup (`SIGNUP_OPEN = false` di `lib/signup.ts`). Dibuka lagi setelah ada domain sendiri dan SMTP custom.
 
 ## Ide untuk v2 (di luar scope v1)
 
 - Pelacak performa konten dan saran berbasis data
 - Halaman share publik untuk satu ide dan script
 - Versi mobile dashboard
-- Seret Kalender ke dnd-kit, halaman Privasi dan Syarat, 404 yang lebih ramah
+- Seret Kalender ke dnd-kit

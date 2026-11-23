@@ -6,6 +6,7 @@ import { Card } from "@/components/primitives/card";
 import type { Platform } from "@/lib/ideas";
 import { DEFAULT_TONE, type Tone } from "@/lib/tones";
 import { GenerateCta } from "./generate-cta";
+import { GenerateHero } from "./generate-hero";
 import { ParameterPanel } from "./parameter-panel";
 import { QuotaExhausted } from "./quota-exhausted";
 import { Results, ResultsSkeleton } from "./results";
@@ -48,6 +49,9 @@ export function Generator({
   }
 
   return (
+    <>
+      {/* Hero ada di sini (bukan di page) supaya chip Jatah ikut berubah setelah generate. */}
+      <GenerateHero remaining={remaining} />
     <div className="flex flex-col gap-4 lg:gap-8">
     <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-12">
       <div className="lg:col-span-5">
@@ -92,5 +96,6 @@ export function Generator({
     </div>
     <GenerateCta />
     </div>
+    </>
   );
 }

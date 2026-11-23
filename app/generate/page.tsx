@@ -40,7 +40,6 @@ async function GenerateContent({
 
   return (
     <AppShell current="generate" email={email}>
-      <GenerateHero remaining={remaining} />
       <Generator
         nicheName={nicheLabel(profile.niche)}
         defaultPlatform={defaultPlatform}

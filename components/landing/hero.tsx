@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/primitives/icon";
 import { DAILY_LIMIT } from "@/lib/constants";
+import { SIGNUP_CLOSED_NOTE, SIGNUP_OPEN } from "@/lib/signup";
 import { HeroBoard } from "./hero-board";
 
 export function Hero() {
@@ -28,10 +29,10 @@ export function Hero() {
 
         <div className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
           <Link
-            href="/login?mode=daftar"
+            href={SIGNUP_OPEN ? "/login?mode=daftar" : "/login"}
             className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-lime px-8 text-sm font-bold shadow-[0_4px_20px_rgba(198,244,50,0.35)] transition hover:brightness-105 sm:w-auto"
           >
-            Coba Gratis Sekarang
+            {SIGNUP_OPEN ? "Coba Gratis Sekarang" : "Masuk ke Plotline"}
             <Icon name="arrow" className="h-4 w-4" />
           </Link>
           <a
@@ -44,7 +45,9 @@ export function Hero() {
         </div>
 
         <p className="mt-6 text-sm text-brand-muted">
-          Gratis, tanpa kartu kredit. {DAILY_LIMIT} generate AI per hari.
+          {SIGNUP_OPEN
+            ? `Gratis, tanpa kartu kredit. ${DAILY_LIMIT} generate AI per hari.`
+            : SIGNUP_CLOSED_NOTE}
         </p>
       </div>
 

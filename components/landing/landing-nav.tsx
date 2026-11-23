@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { connection } from "next/server";
+import { SIGNUP_OPEN } from "@/lib/signup";
 import { createClient } from "@/lib/supabase/server";
 
 const LINKS = [
@@ -18,9 +19,11 @@ function GuestActions() {
       <Link href="/login" className={GHOST}>
         Masuk
       </Link>
-      <Link href="/login?mode=daftar" className={SOLID}>
-        Get started
-      </Link>
+      {SIGNUP_OPEN ? (
+        <Link href="/login?mode=daftar" className={SOLID}>
+          Get started
+        </Link>
+      ) : null}
     </>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Card } from "@/components/primitives/card";
 import { DAILY_LIMIT } from "@/lib/constants";
+import { SIGNUP_CLOSED_NOTE, SIGNUP_OPEN } from "@/lib/signup";
 import { LoginForm } from "./login-form";
 import { SignupForm } from "./signup-form";
 
@@ -31,12 +32,18 @@ export function AuthCard({ initialMode = "masuk" }: { initialMode?: Mode }) {
       </div>
 
       <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-        {mode === "masuk" ? "Selamat datang kembali" : "Mulai dengan Plotline"}
+        {mode === "masuk"
+          ? "Selamat datang kembali"
+          : SIGNUP_OPEN
+            ? "Mulai dengan Plotline"
+            : "Pendaftaran ditutup"}
       </h1>
       <p className="mt-1.5 text-sm text-brand-muted">
         {mode === "masuk"
           ? "Lanjutkan perencanaan konten lo."
-          : "Bikin akun gratis dan rencanakan konten pertama lo."}
+          : SIGNUP_OPEN
+            ? "Bikin akun gratis dan rencanakan konten pertama lo."
+            : "Untuk sementara hanya akun yang sudah ada yang bisa masuk."}
       </p>
 
       <button
@@ -56,10 +63,23 @@ export function AuthCard({ initialMode = "masuk" }: { initialMode?: Mode }) {
         <span className="h-px flex-1 bg-brand-border" />
       </div>
 
-      {mode === "masuk" ? <LoginForm /> : <SignupForm />}
+      {mode === "masuk" ? (
+        <LoginForm />
+      ) : SIGNUP_OPEN ? (
+        <SignupForm />
+      ) : (
+        <div role="status" className="rounded-2xl bg-brand-bg p-4 text-sm">
+          <p className="font-bold">{SIGNUP_CLOSED_NOTE}</p>
+          <p className="mt-1 text-brand-muted">
+            Kalau sudah punya akun, pindah ke tab Masuk.
+          </p>
+        </div>
+      )}
 
       <p className="mt-4 text-center text-xs text-brand-muted">
-        Gratis, {DAILY_LIMIT} generate AI per hari.
+        {SIGNUP_OPEN || mode === "masuk"
+          ? `Gratis, ${DAILY_LIMIT} generate AI per hari.`
+          : "Kembali lagi nanti ya."}
       </p>
     </Card>
   );

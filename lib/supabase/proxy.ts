@@ -1,6 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+// Halaman yang boleh dibuka tanpa login. Persis sama dengan path-nya.
+// Tambahkan di sini kalau ada halaman publik baru.
+const PUBLIC_PATHS = ["/", "/privasi", "/syarat"];
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -32,7 +36,9 @@ export async function updateSession(request: NextRequest) {
 
   const path = request.nextUrl.pathname;
   const isPublic =
-    path === "/" || path.startsWith("/login") || path.startsWith("/auth");
+    PUBLIC_PATHS.includes(path) ||
+    path.startsWith("/login") ||
+    path.startsWith("/auth");
 
   if (!user && !isPublic) {
     const url = request.nextUrl.clone();

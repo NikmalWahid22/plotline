@@ -4,8 +4,8 @@ import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
 const LINKS = [
-  { href: "#fitur", label: "Fitur" },
-  { href: "#cara-kerja", label: "Cara Kerja" },
+  { href: "/#fitur", label: "Fitur" },
+  { href: "/#cara-kerja", label: "Cara Kerja" },
 ];
 
 const GHOST = "rounded-full px-3 py-1.5 text-sm font-bold text-brand-ink transition-colors hover:text-brand-muted";

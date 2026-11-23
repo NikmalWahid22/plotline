@@ -5,10 +5,10 @@ const COLUMNS: { title: string; links: { label: string; href?: string }[] }[] = 
   {
     title: "Produk",
     links: [
-      { label: "Idea Generator", href: "#fitur" },
-      { label: "Script Editor", href: "#fitur" },
-      { label: "Papan Visual", href: "#fitur" },
-      { label: "Kalender", href: "#fitur" },
+      { label: "Idea Generator", href: "/#fitur" },
+      { label: "Script Editor", href: "/#fitur" },
+      { label: "Papan Visual", href: "/#fitur" },
+      { label: "Kalender", href: "/#fitur" },
     ],
   },
   {
@@ -23,8 +23,8 @@ const COLUMNS: { title: string; links: { label: string; href?: string }[] }[] = 
     title: "Perusahaan",
     links: [
       { label: "Tentang Kami" },
-      { label: "Privasi" },
-      { label: "Syarat & Ketentuan" },
+      { label: "Privasi", href: "/privasi" },
+      { label: "Syarat & Ketentuan", href: "/syarat" },
     ],
   },
 ];
@@ -53,12 +53,12 @@ export function LandingFooter() {
                 {c.links.map((l) => (
                   <li key={l.label}>
                     {l.href ? (
-                      <a
+                      <Link
                         href={l.href}
                         className="text-sm text-brand-muted transition-colors hover:text-brand-ink"
                       >
                         {l.label}
-                      </a>
+                      </Link>
                     ) : (
                       <span
                         title="Segera hadir"

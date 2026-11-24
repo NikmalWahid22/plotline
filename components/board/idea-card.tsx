@@ -2,8 +2,9 @@
 
 import { useDraggable } from "@dnd-kit/core";
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { deleteIdea, moveIdea } from "@/app/dashboard/actions";
+import { IdeaEditForm } from "@/components/board/idea-edit-form";
 import { PlatformChip } from "@/components/ideas/platform-chip";
 import { Card } from "@/components/primitives/card";
 import { Icon } from "@/components/primitives/icon";
@@ -16,9 +17,13 @@ const ARROW_BTN =
 export function IdeaCard({ idea }: { idea: BoardIdea }) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [editing, setEditing] = useState(false);
+  const closeEdit = useCallback(() => setEditing(false), []);
 
+  // Tidak bisa diseret saat form edit terbuka, supaya memilih teks di kolom isian aman.
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: idea.id,
+    disabled: editing,
   });
 
   const index = STATUSES.findIndex((s) => s.value === idea.status);
@@ -40,6 +45,14 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
   function remove() {
     if (!window.confirm(`Hapus ide "${idea.title}"?`)) return;
     run(() => deleteIdea(idea.id));
+  }
+
+  if (editing) {
+    return (
+      <Card ref={setNodeRef} className="p-4 md:p-6">
+        <IdeaEditForm idea={idea} onDone={closeEdit} onCancel={closeEdit} />
+      </Card>
+    );
   }
 
   return (
@@ -126,6 +139,14 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
         >
           {idea.has_script ? "Buka script" : "Buat script"}
         </Link>
+        <button
+          type="button"
+          disabled={pending}
+          onClick={() => setEditing(true)}
+          className="text-xs font-semibold text-brand-muted transition-colors hover:text-brand-ink disabled:opacity-40"
+        >
+          Edit
+        </button>
         <button
           type="button"
           disabled={pending}

@@ -37,6 +37,40 @@ export async function createIdea(
   return { ok: true };
 }
 
+// Mengubah judul, hook, dan platform. `id` diikat lewat .bind() di komponen.
+export async function updateIdea(
+  id: string,
+  _prev: IdeaFormState,
+  formData: FormData
+): Promise<IdeaFormState> {
+  if (!UUID_RE.test(id)) return { error: "Ide tidak valid." };
+
+  const title = String(formData.get("title") ?? "").trim();
+  const hook = String(formData.get("hook") ?? "").trim();
+  const platform = String(formData.get("platform") ?? "");
+
+  if (title.length < 1 || title.length > 200) {
+    return { error: "Judul wajib diisi (maksimal 200 karakter)." };
+  }
+  if (hook.length > 500) return { error: "Hook maksimal 500 karakter." };
+  if (!isPlatform(platform)) return { error: "Pilih platform." };
+
+  const { supabase } = await requireUser();
+
+  // RLS memastikan hanya ide milik akun ini yang bisa diubah.
+  const { error } = await supabase
+    .from("ideas")
+    .update({ title, hook: hook || null, platform })
+    .eq("id", id);
+
+  if (error) return { error: "Gagal menyimpan perubahan. Coba lagi sebentar." };
+
+  revalidatePath("/dashboard");
+  revalidatePath("/calendar");
+  revalidatePath(`/ideas/${id}`);
+  return { ok: true };
+}
+
 export async function moveIdea(
   id: string,
   status: string

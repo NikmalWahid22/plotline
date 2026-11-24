@@ -17,19 +17,22 @@ export async function createIdea(
   const title = String(formData.get("title") ?? "").trim();
   const hook = String(formData.get("hook") ?? "").trim();
   const platform = String(formData.get("platform") ?? "");
+  // Opsional: tombol "+" di kolom Papan mengirim status kolomnya. Kosong = Ide & Riset.
+  const status = String(formData.get("status") ?? "") || "idea";
 
   if (title.length < 1 || title.length > 200) {
     return { error: "Judul wajib diisi (maksimal 200 karakter)." };
   }
   if (hook.length > 500) return { error: "Hook maksimal 500 karakter." };
   if (!isPlatform(platform)) return { error: "Pilih platform." };
+  if (!isStatus(status)) return { error: "Tahap tidak valid." };
 
   const { supabase } = await requireUser();
 
   // user_id terisi otomatis dari sesi login (default auth.uid() di database).
   const { error } = await supabase
     .from("ideas")
-    .insert({ title, hook: hook || null, platform });
+    .insert({ title, hook: hook || null, platform, status });
 
   if (error) return { error: "Gagal menyimpan ide. Coba lagi sebentar." };
 

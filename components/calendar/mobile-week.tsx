@@ -163,8 +163,15 @@ export function MobileWeek({
                       }}
                       className="flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left transition hover:bg-white"
                     >
-                      <span className="line-clamp-2 text-sm font-semibold leading-snug">
-                        {idea.title}
+                      <span className="min-w-0">
+                        <span className="line-clamp-2 text-sm font-semibold leading-snug">
+                          {idea.title}
+                        </span>
+                        {idea.hook && (
+                          <span className="mt-0.5 line-clamp-1 text-xs italic text-brand-muted">
+                            &ldquo;{idea.hook}&rdquo;
+                          </span>
+                        )}
                       </span>
                       <Icon name="plus" className="h-4 w-4 shrink-0 text-brand-muted" />
                     </button>

@@ -159,6 +159,7 @@ export function Board({
                   status={s.value}
                   label={s.label}
                   ideas={visible.filter((i) => i.status === s.value)}
+                  defaultPlatform={defaultPlatform}
                   activeOnMobile={mobileStatus === s.value}
                 />
               ))}

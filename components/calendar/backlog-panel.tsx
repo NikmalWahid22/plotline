@@ -34,7 +34,7 @@ export function BacklogPanel({
       }`}
     >
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-xl font-extrabold tracking-tight">Ide Backlog</h2>
+        <h2 className="text-heading">Ide Backlog</h2>
         <span className="rounded-full bg-brand-lime px-3 py-1 text-xs font-bold">
           {ideas.length} Siap
         </span>
@@ -63,6 +63,11 @@ export function BacklogPanel({
                 <h3 className="line-clamp-2 flex-1 text-sm font-bold leading-snug">{idea.title}</h3>
                 <Icon name="grip" className="mt-0.5 h-4 w-4 shrink-0 text-brand-muted" />
               </div>
+              {idea.hook && (
+                <p className="mt-1.5 line-clamp-2 text-xs font-medium italic text-brand-muted">
+                  &ldquo;{idea.hook}&rdquo;
+                </p>
+              )}
               <div className="mt-3">
                 <PlatformChip platform={idea.platform} />
               </div>

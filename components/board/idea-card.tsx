@@ -12,7 +12,35 @@ import { formatShortDate } from "@/lib/format";
 import { STATUSES, type BoardIdea, type Status } from "@/lib/ideas";
 
 const ARROW_BTN =
-  "flex h-8 w-8 items-center justify-center rounded-full bg-brand-bg text-sm font-bold transition-colors hover:bg-brand-border disabled:cursor-not-allowed disabled:opacity-30";
+  "flex h-8 w-8 items-center justify-center rounded-full bg-brand-bg text-sm font-bold xl:h-7 xl:w-7 2xl:h-8 2xl:w-8 transition-colors hover:bg-brand-border disabled:cursor-not-allowed disabled:opacity-30";
+
+// Progress "Ambil Shot" di kartu Syuting. Angkanya dari centang di halaman script.
+function ShotProgress({ done, total }: { done: number; total: number }) {
+  const pct = Math.round((done / total) * 100);
+  return (
+    <div>
+      <div className="flex items-center justify-between text-xs font-semibold">
+        <span className="text-brand-muted">Shot diambil</span>
+        <span>
+          {done} / {total}
+        </span>
+      </div>
+      <div
+        role="progressbar"
+        aria-label="Shot diambil"
+        aria-valuemin={0}
+        aria-valuemax={total}
+        aria-valuenow={done}
+        className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-brand-bg"
+      >
+        <div
+          className={`h-full rounded-full ${done === total ? "bg-brand-lime" : "bg-brand-purple"}`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  );
+}
 
 export function IdeaCard({ idea }: { idea: BoardIdea }) {
   const [pending, startTransition] = useTransition();
@@ -67,7 +95,7 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
       // jadi pindah lewat tombol panah.
       {...listeners}
       {...{ ...attributes, role: undefined, tabIndex: undefined }}
-      className={`flex flex-col gap-3 p-4 md:cursor-grab md:gap-4 md:p-6 ${
+      className={`flex flex-col gap-3 p-4 md:cursor-grab md:gap-4 md:p-6 xl:p-5 2xl:p-6 ${
         isDragging
           ? "relative z-50 cursor-grabbing shadow-2xl"
           : "transition-all duration-200 md:hover:-translate-y-1"
@@ -97,6 +125,10 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
         )}
       </div>
 
+      {idea.status === "filming" && (idea.shots_total ?? 0) > 0 && (
+        <ShotProgress done={idea.shots_done ?? 0} total={idea.shots_total ?? 0} />
+      )}
+
       <div className="flex items-center justify-between pt-1 text-xs font-semibold text-brand-muted">
         <span className="flex items-center gap-1">
           <Icon name="notes" className="h-4 w-4" />
@@ -114,7 +146,7 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
         </p>
       )}
 
-      <div className="flex items-center gap-2 border-t border-brand-border/70 pt-3">
+      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 border-t border-brand-border/70 pt-3">
         <button
           type="button"
           disabled={!prev || pending}
@@ -135,7 +167,7 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
         </button>
         <Link
           href={`/ideas/${idea.id}`}
-          className="ml-auto rounded-full bg-brand-bg px-3 py-1 text-xs font-bold transition-colors hover:bg-brand-border"
+          className="ml-auto whitespace-nowrap rounded-full bg-brand-bg px-2.5 py-1 text-xs font-bold transition-colors hover:bg-brand-border"
         >
           {idea.has_script ? "Buka script" : "Buat script"}
         </Link>
@@ -143,7 +175,7 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
           type="button"
           disabled={pending}
           onClick={() => setEditing(true)}
-          className="text-xs font-semibold text-brand-muted transition-colors hover:text-brand-ink disabled:opacity-40"
+          className="whitespace-nowrap px-1 text-xs font-semibold text-brand-muted transition-colors hover:text-brand-ink disabled:opacity-40"
         >
           Edit
         </button>
@@ -151,7 +183,7 @@ export function IdeaCard({ idea }: { idea: BoardIdea }) {
           type="button"
           disabled={pending}
           onClick={remove}
-          className="text-xs font-semibold text-brand-muted transition-colors hover:text-red-700 disabled:opacity-40"
+          className="whitespace-nowrap px-1 text-xs font-semibold text-brand-muted transition-colors hover:text-red-700 disabled:opacity-40"
         >
           Hapus
         </button>

@@ -19,10 +19,12 @@ export function CalendarView({
   ideas,
   weekStart,
   today,
+  target = null,
 }: {
   ideas: CalendarIdea[];
   weekStart: string;
   today: string;
+  target?: { min: number; label: string } | null;
 }) {
   const [filter, setFilter] = useState<PlatformFilter>("all");
   // Perubahan jadwal yang tampil langsung, sebelum server selesai menyimpan.
@@ -90,7 +92,11 @@ export function CalendarView({
 
   return (
     <div className="flex flex-col gap-4 lg:gap-8">
-      <CalendarHero scheduledThisWeek={scheduledThisWeek} backlog={backlogAll.length} />
+      <CalendarHero
+        scheduledThisWeek={scheduledThisWeek}
+        backlog={backlogAll.length}
+        target={target}
+      />
 
       <CalendarControls
         weekStart={weekStart}

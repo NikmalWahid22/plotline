@@ -30,7 +30,12 @@ export type Idea = {
 };
 
 // Ide di papan: ditambah penanda apakah sudah punya script.
-export type BoardIdea = Idea & { has_script: boolean };
+// shots_total / shots_done: jumlah shot di script dan yang sudah dicentang "Ambil Shot".
+export type BoardIdea = Idea & {
+  has_script: boolean;
+  shots_total?: number;
+  shots_done?: number;
+};
 
 // Ide hasil AI yang belum disimpan.
 export type IdeaDraft = { title: string; hook: string };

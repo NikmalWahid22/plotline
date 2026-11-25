@@ -32,15 +32,28 @@ async function DashboardContent() {
       .from("ideas")
       .select("id, title, hook, platform, status, created_at")
       .order("created_at", { ascending: false }),
-    supabase.from("scripts").select("idea_id"),
+    supabase.from("scripts").select("idea_id, shots"),
     getRemainingQuota(supabase),
   ]);
 
-  const withScript = new Set((scripts ?? []).map((s) => s.idea_id as string));
-  const board: BoardIdea[] = (ideas ?? []).map((i) => ({
-    ...(i as Omit<BoardIdea, "has_script">),
-    has_script: withScript.has(i.id as string),
-  }));
+  // Per ide: apakah punya script, berapa shot, dan berapa yang sudah dicentang.
+  const scriptInfo = new Map<string, { total: number; done: number }>();
+  for (const s of scripts ?? []) {
+    const shots = Array.isArray(s.shots) ? (s.shots as { done?: unknown }[]) : [];
+    scriptInfo.set(s.idea_id as string, {
+      total: shots.length,
+      done: shots.filter((x) => x?.done === true).length,
+    });
+  }
+  const board: BoardIdea[] = (ideas ?? []).map((i) => {
+    const info = scriptInfo.get(i.id as string);
+    return {
+      ...(i as Omit<BoardIdea, "has_script" | "shots_total" | "shots_done">),
+      has_script: info !== undefined,
+      shots_total: info?.total ?? 0,
+      shots_done: info?.done ?? 0,
+    };
+  });
 
   const first = profile.platforms?.[0] ?? "";
   const defaultPlatform: Platform = isPlatform(first) ? first : "tiktok";

@@ -114,5 +114,7 @@ export async function toggleShotDone(
     .eq("idea_id", ideaId);
   if (error) return { error: "Gagal menyimpan centang." };
 
+  // Papan menampilkan progres shot di kartu Syuting.
+  revalidatePath("/dashboard");
   return {};
 }

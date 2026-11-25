@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { requireOnboardedUser } from "@/lib/auth";
+import { weeklyTarget } from "@/lib/profile";
 import { AppShell } from "@/components/layout/app-shell";
 import { CalendarView } from "@/components/calendar/calendar-view";
 import { dateKeyFromIso, isDateKey, startOfWeek, todayKey } from "@/lib/dates";
@@ -26,7 +27,7 @@ async function CalendarContent({
 }) {
   await connection();
   const { week } = await searchParams;
-  const { supabase, email } = await requireOnboardedUser();
+  const { supabase, email, profile } = await requireOnboardedUser();
 
   const today = todayKey();
   const anchor = week && isDateKey(week) ? week : today;
@@ -48,7 +49,12 @@ async function CalendarContent({
 
   return (
     <AppShell current="calendar" email={email}>
-      <CalendarView ideas={ideas} weekStart={weekStart} today={today} />
+      <CalendarView
+        ideas={ideas}
+        weekStart={weekStart}
+        today={today}
+        target={weeklyTarget(profile.posting_frequency)}
+      />
     </AppShell>
   );
 }

@@ -25,6 +25,8 @@ export type Idea = {
   platform: Platform;
   status: Status;
   created_at: string;
+  // Waktu ide masuk ke tahap Terbit (null kalau belum terbit).
+  published_at?: string | null;
   // Terisi di halaman papan: apakah ide ini sudah punya script.
   has_script?: boolean;
 };

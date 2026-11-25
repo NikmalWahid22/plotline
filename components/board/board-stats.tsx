@@ -13,7 +13,19 @@ export function BoardStats({
   remaining: number | null;
 }) {
   return (
-    <Card className="flex flex-col justify-between gap-4 p-6 lg:col-span-4">
+    <>
+      {/* HP: satu baris ringkas */}
+      <Card className="grid grid-cols-3 divide-x divide-brand-border p-4 md:hidden">
+        <Mini value={published} label="Terbit minggu ini" />
+        <Mini value={filming} label="Syuting" accent />
+        <Mini
+          value={typeof remaining === "number" ? `${remaining}/${DAILY_LIMIT}` : "–"}
+          label="Jatah AI"
+        />
+      </Card>
+
+      {/* Tablet dan desktop */}
+      <Card className="hidden flex-col justify-between gap-4 p-6 md:flex lg:col-span-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold tracking-tight">Performa Ritme</h2>
         <Icon name="bolt" className="h-5 w-5 text-brand-purple" />
@@ -22,14 +34,14 @@ export function BoardStats({
       <div className="grid grid-cols-2 gap-4 py-2">
         <div className="flex flex-col justify-center rounded-2xl bg-brand-bg p-4">
           <p className="flex items-baseline gap-1">
-            <span className="text-4xl font-extrabold leading-10">{published}</span>
+            <span className="text-stat">{published}</span>
             <span className="text-xs font-semibold text-brand-muted">video</span>
           </p>
-          <p className="mt-1 text-sm font-medium text-brand-muted">Sudah Terbit</p>
+          <p className="mt-1 text-sm font-medium text-brand-muted">Terbit Minggu Ini</p>
         </div>
         <div className="flex flex-col justify-center rounded-2xl bg-brand-bg p-4">
           <p className="flex items-baseline gap-1">
-            <span className="text-4xl font-extrabold leading-10 text-brand-purple">
+            <span className="text-stat text-brand-purple">
               {filming}
             </span>
             <span className="text-xs font-semibold text-brand-muted">proyek</span>
@@ -55,6 +67,16 @@ export function BoardStats({
         </div>
         <Icon name="trending" className="h-[18px] w-[18px] text-brand-muted" />
       </div>
-    </Card>
+      </Card>
+    </>
+  );
+}
+
+function Mini({ value, label, accent }: { value: number | string; label: string; accent?: boolean }) {
+  return (
+    <div className="px-2 text-center">
+      <p className={`text-xl font-bold leading-none ${accent ? "text-brand-purple" : ""}`}>{value}</p>
+      <p className="mt-1.5 text-xs font-semibold text-brand-muted">{label}</p>
+    </div>
   );
 }

@@ -41,11 +41,13 @@ export function Board({
   ideas: serverIdeas,
   defaultPlatform,
   remaining,
+  weekStart,
   nicheName,
 }: {
   ideas: BoardIdea[];
   defaultPlatform: Platform;
   remaining: number | null;
+  weekStart: string;
   nicheName: string;
 }) {
   const [showForm, setShowForm] = useState(false);
@@ -57,8 +59,12 @@ export function Board({
   // ke data asli dan pesan error muncul.
   const [ideas, moveOptimistic] = useOptimistic(
     serverIdeas,
-    (state, move: { id: string; to: Status }) =>
-      state.map((i) => (i.id === move.id ? { ...i, status: move.to } : i))
+    (state, move: { id: string; to: Status; at: string }) =>
+      state.map((i) =>
+        i.id === move.id
+          ? { ...i, status: move.to, published_at: move.to === "published" ? move.at : null }
+          : i
+      )
   );
   const [, startTransition] = useTransition();
   const [dragError, setDragError] = useState<string | null>(null);
@@ -82,7 +88,7 @@ export function Board({
 
     setDragError(null);
     startTransition(async () => {
-      moveOptimistic({ id, to });
+      moveOptimistic({ id, to, at: new Date().toISOString() });
       const res = await moveIdea(id, to);
       if (res.error) setDragError(res.error);
     });
@@ -91,12 +97,17 @@ export function Board({
   const visible = ideas.filter((i) => matchesFilter(filter, i.platform));
   const count = (status: string) => ideas.filter((i) => i.status === status).length;
 
+  // Terbit dalam 7 hari terakhir (bukan total seluruh waktu).
+  const publishedThisWeek = ideas.filter(
+    (i) => i.status === "published" && i.published_at != null && i.published_at >= weekStart
+  ).length;
+
   return (
     <div className="flex flex-col gap-5 md:gap-8">
       <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-12">
         <BoardHero defaultPlatform={defaultPlatform} nicheName={nicheName} />
         <BoardStats
-          published={count("published")}
+          published={publishedThisWeek}
           filming={count("filming")}
           remaining={remaining}
         />

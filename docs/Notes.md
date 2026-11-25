@@ -47,6 +47,16 @@ File ini dicatat sambil jalan. Tujuannya: ingat kenapa sebuah keputusan diambil,
 | **Halaman 404 tidak membedakan ide yang dihapus dan ide milik akun lain** | Tidak membocorkan apakah sebuah ide ada | Pesan sedikit kurang spesifik |
 | **Hero Generate dirender di dalam komponen Generator** | Chip Jatah ikut berubah setelah generate karena memakai state yang sama dengan batang jatah | Komponen hero ikut dibundel ke sisi klien |
 
+### Keputusan Sprint 2 (25 Nov 2026)
+
+| Keputusan | Alasan | Trade-off |
+|---|---|---|
+| **Kolom `published_at` di tabel `ideas`**, diisi oleh `moveIdea` dan `createIdea` | "Terbit minggu ini" harus menghitung waktu terbit sebenarnya, bukan `created_at`. Kolom dikosongkan saat ide keluar dari Terbit | Ide yang sudah terbit sebelum kolom ada diberi `created_at` sebagai perkiraan |
+| **Batas "minggu ini" = 7 hari terakhir**, dihitung di server (`weekStart` dari `dashboard/page.tsx`) | Komponen klien tetap murni dan tidak memanggil jam sendiri. Gerakan optimistis membawa waktunya dari event handler | Bukan minggu kalender Senin sampai Minggu |
+| **Target rilis per minggu, bukan per hari** | Frekuensi di profil (1-2, 3-4, 5+) memang per minggu. Rencana awal menulis "per hari" dan itu keliru. Yang ditampilkan adalah batas bawah rentang | Rentang atas tidak ditampilkan sebagai angka |
+| **Tombol "+" per kolom hanya di desktop** | Di HP, kolom ditukar lewat tab status dan tombol "Ide Baru" sudah ada | Perilaku HP dan desktop berbeda |
+| **Edit ide lewat form di kartu**, kartu tidak bisa diseret saat diedit | Seret dan ketik bentrok di kartu yang sama | Edit judul, hook, platform saja. Status tetap lewat panah atau seret |
+
 ## Keamanan (wajib dipatuhi)
 
 1. API key Gemini hanya dipanggil dari server, tidak pernah dari browser.
@@ -93,6 +103,8 @@ SQL lengkap ada di `supabase/schema.sql`.
 - [x] Deploy ke Vercel (`plotline-creator.vercel.app`)
 - [x] Lighthouse di atas 85 (20 Nov 2026)
 - [x] Case study proses: draf sudah ditulis (21 Nov 2026), tinggal mengisi bagian pribadi dan cerita Gemini
+- [x] Sprint 1: Privasi, Syarat, 404, chip Jatah, pendaftaran ditutup (23 Nov 2026)
+- [x] Sprint 2: edit ide, "+" per kolom, hook di backlog, progress shot, target rilis, Terbit minggu ini (25 Nov 2026)
 - [ ] ~~Uji ke 5 orang~~ **Diganti** dengan case study proses. Uji ke 2–3 orang jadi langkah berikutnya, bukan syarat Phase 1
 
 ## Masalah yang pernah muncul dan solusinya

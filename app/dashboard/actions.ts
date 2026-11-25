@@ -32,7 +32,13 @@ export async function createIdea(
   // user_id terisi otomatis dari sesi login (default auth.uid() di database).
   const { error } = await supabase
     .from("ideas")
-    .insert({ title, hook: hook || null, platform, status });
+    .insert({
+      title,
+      hook: hook || null,
+      platform,
+      status,
+      published_at: status === "published" ? new Date().toISOString() : null,
+    });
 
   if (error) return { error: "Gagal menyimpan ide. Coba lagi sebentar." };
 
@@ -82,7 +88,15 @@ export async function moveIdea(
   if (!isStatus(status)) return { error: "Status tidak valid." };
 
   const { supabase } = await requireUser();
-  const { error } = await supabase.from("ideas").update({ status }).eq("id", id);
+  // published_at dicatat saat masuk Terbit dan dikosongkan saat keluar,
+  // supaya statistik "Terbit minggu ini" menghitung waktu terbit sebenarnya.
+  const { error } = await supabase
+    .from("ideas")
+    .update({
+      status,
+      published_at: status === "published" ? new Date().toISOString() : null,
+    })
+    .eq("id", id);
 
   if (error) return { error: "Gagal memindahkan ide." };
 

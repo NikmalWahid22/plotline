@@ -30,7 +30,7 @@ async function DashboardContent() {
   const [{ data: ideas }, { data: scripts }, remaining] = await Promise.all([
     supabase
       .from("ideas")
-      .select("id, title, hook, platform, status, created_at")
+      .select("id, title, hook, platform, status, created_at, published_at")
       .order("created_at", { ascending: false }),
     supabase.from("scripts").select("idea_id, shots"),
     getRemainingQuota(supabase),
@@ -55,6 +55,9 @@ async function DashboardContent() {
     };
   });
 
+  // Batas "minggu ini" untuk statistik Terbit: 7 hari terakhir.
+  const weekStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
   const first = profile.platforms?.[0] ?? "";
   const defaultPlatform: Platform = isPlatform(first) ? first : "tiktok";
 
@@ -64,6 +67,7 @@ async function DashboardContent() {
         ideas={board}
         defaultPlatform={defaultPlatform}
         remaining={remaining}
+        weekStart={weekStart}
         nicheName={nicheLabel(profile.niche)}
       />
     </AppShell>
